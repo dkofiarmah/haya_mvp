@@ -1,0 +1,7 @@
+# This file ensures the dashboard route files are included in Vercel's build
+# It helps with file tracing issues
+page.tsx
+layout.tsx
+page_client-reference-manifest.js
+_vercel_trace_helper.js
+_dashboard-wrapper.tsx

@@ -1,12 +1,15 @@
 "use client"
 
-import { DashboardMetrics } from "@/components/dashboard-metrics"
-import { useAuth } from "@/components/providers/supabase-auth-provider"
+// Import client components via our wrapper to help with Vercel tracing
+import {
+  DashboardMetrics,
+  OnboardingBanner,
+  useAuth,
+  useOnboarding,
+  supabaseClient
+} from "./nan/_client-components"
 import { BarChart3, CalendarDays, Users2, DollarSign } from "lucide-react"
-import { OnboardingBanner } from "@/components/onboarding-banner"
-import { useOnboarding } from "@/hooks/use-onboarding"
 import { useEffect, useState } from "react"
-import { supabaseClient } from "@/lib/supabase/auth-client"
 
 interface Metric {
   title: string

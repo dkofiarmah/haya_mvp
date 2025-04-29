@@ -18,6 +18,9 @@ const nextConfig = {
     // Disable CSS optimization entirely for Vercel
     optimizeCss: false,
     parallelServerCompiles: true,
+    serverMinification: false, // Disable server-side code minification for better tracing
+    forceSwcTransforms: true, // Force using SWC for all transformations
+    instrumentationHook: true, // Enable instrumentation hook for better debugging
   },
   // Custom webpack configuration
   webpack: (config, { isServer, dev }) => {
@@ -28,6 +31,31 @@ const nextConfig = {
         const entries = await originalEntry();
         return entries;
       };
+
+      // Add a special resolver fallback for client reference manifest files
+      if (!config.resolve) {
+        config.resolve = {};
+      }
+
+      if (!config.resolve.fallback) {
+        config.resolve.fallback = {};
+      }
+
+      // Add fallback for dashboard client reference manifest
+      config.resolve.fallback['./app/(dashboard)/page_client-reference-manifest.js'] =
+        require.resolve('./app/(dashboard)/page_client-reference-manifest.js');
+
+      // Make dashboard routes work better with static optimization
+      if (isServer) {
+        if (!config.optimization) {
+          config.optimization = {};
+        }
+
+        // Ensure all dashboard route files are kept together and not split
+        if (!config.optimization.concatenateModules) {
+          config.optimization.concatenateModules = true;
+        }
+      }
 
       // Add fallbacks for Node.js modules
       if (!isServer) {
@@ -88,6 +116,8 @@ const nextConfig = {
       return config;
     }
   },
+  // Ensure we don't generate source maps in production
+  productionBrowserSourceMaps: false,
 };
 
 export default nextConfig;

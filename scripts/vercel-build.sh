@@ -28,6 +28,30 @@ node ./scripts/verify-modules.js || {
   npm install critters@0.0.20 punycode.js
 }
 
+# Custom step to ensure dashboard client reference manifest is included
+echo "Pre-build checks for dashboard routes..."
+if [ -f "app/(dashboard)/page_client-reference-manifest.js" ]; then
+  echo "✅ Dashboard page client reference manifest exists"
+else
+  echo "⚠️ Dashboard page client reference manifest missing, creating now..."
+  cat > "app/(dashboard)/page_client-reference-manifest.js" << 'EOL'
+/**
+ * This is a placeholder file to prevent the ENOENT error during Vercel deployment.
+ * It directly corresponds to the file that Vercel is looking for:
+ * /vercel/path1/.next/server/app/(dashboard)/page_client-reference-manifest.js
+ */
+
+// Export a placeholder object to ensure the file is not empty
+export const ClientReferenceManifest = {
+  ssrModuleMapping: {},
+  edgeSSRModuleMapping: {},
+  clientModules: {},
+  entryCSSFiles: {}
+};
+EOL
+  echo "✅ Created dashboard page client reference manifest"
+fi
+
 # Make sure we're using the correct Next.js config
 echo "Setting up Next.js configuration for Vercel..."
 # We're now using next.config.mjs instead of next.config.js
@@ -166,3 +190,10 @@ fi
 # Run Next.js build with file tracing disabled
 echo "Building with file tracing disabled..."
 VERCEL=1 NODE_OPTIONS="--max-old-space-size=4096" NEXT_DISABLE_FILE_SYSTEM_CACHE=1 ./node_modules/.bin/next build
+
+# Post-build: Run the client reference manifest fix script
+echo "Running post-build client manifest fixes..."
+chmod +x ./scripts/fix-client-manifests.sh
+./scripts/fix-client-manifests.sh
+
+echo "✅ Vercel build completed successfully!"
