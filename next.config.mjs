@@ -16,6 +16,9 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     optimizeCss: true,
     parallelServerCompiles: true,
+    outputFileTracingExcludes: {
+      '*': ['node_modules/**/*', 'canvas/**/*']
+    },
   },
   // Add this section to handle the punycode deprecation warning and canvas issues
   webpack: (config, { isServer, dev }) => {
