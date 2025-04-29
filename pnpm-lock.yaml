@@ -212,13 +212,6 @@ importers:
       zod:
         specifier: latest
         version: 3.24.3
-    optionalDependencies:
-      canvas:
-        specifier: ^2.11.2
-        version: 2.11.2(encoding@0.1.13)
-      text2png:
-        specifier: ^2.3.0
-        version: 2.3.0(encoding@0.1.13)
     devDependencies:
       '@supabase/supabase-js':
         specifier: ^2.49.4
@@ -1871,9 +1864,6 @@ packages:
 
   commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
-
-  commander@3.0.2:
-    resolution: {integrity: sha512-Gar0ASD4BDyKC4hl4DwHqDrmvjoxWKZigVnAbn5H1owvm4CxCPdb0HQDehwNYMJpla5+M2tPmPARzhtYuwpHow==}
 
   commander@4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
@@ -3882,10 +3872,6 @@ packages:
   text-hex@1.0.0:
     resolution: {integrity: sha512-uuVGNWzgJ4yhRaNSiubPY7OjISw4sw4E5Uv0wbjp+OzcbmVU/rsT8ujgcXJhn9ypzsgr5vlzpPqP+MBBKcGvbg==}
 
-  text2png@2.3.0:
-    resolution: {integrity: sha512-1fCPz0QqWN+bYjXHutINi9gbA7hBslrrr9oDk1c8ilcQz+g+6KhLqb9Oe1l8mdIXBMSr5b/EgAsxMWqSTtCHsA==}
-    hasBin: true
-
   thenify-all@1.6.0:
     resolution: {integrity: sha512-RNxQH/qI8/t3thXJDwcstUO4zeqo64+Uy/+sNVRBx4Xn2OX+OZ9oP+iJnNFqplFra2ZUVeKCSa2oVWi3T4uVmA==}
     engines: {node: '>=0.8'}
@@ -5877,9 +5863,6 @@ snapshots:
 
   commander@2.20.3: {}
 
-  commander@3.0.2:
-    optional: true
-
   commander@4.1.1: {}
 
   commander@7.2.0: {}
@@ -7852,15 +7835,6 @@ snapshots:
       source-map-support: 0.5.21
 
   text-hex@1.0.0: {}
-
-  text2png@2.3.0(encoding@0.1.13):
-    dependencies:
-      canvas: 2.11.2(encoding@0.1.13)
-      commander: 3.0.2
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-    optional: true
 
   thenify-all@1.6.0:
     dependencies:

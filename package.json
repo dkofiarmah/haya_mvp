@@ -91,7 +91,5 @@
     "webpack-bundle-analyzer": "^4.10.2"
   },
   "optionalDependencies": {
-    "canvas": "^2.11.2",
-    "text2png": "^2.3.0"
   }
 }
