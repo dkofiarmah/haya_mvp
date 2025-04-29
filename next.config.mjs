@@ -32,24 +32,7 @@ const nextConfig = {
     optimizeCss: true,
     parallelServerCompiles: true,
   },
-  webpack: (config, { isServer }) => {
-    // Handle the canvas module in webpack
-    if (isServer) {
-      config.externals = [...config.externals, 'canvas'];
-    }
-    
-    // Add a fallback for the canvas module
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      canvas: false,
-    };
-    
-    return config;
-  },
-    parallelServerCompiles: true,
-    optimizeCss: true,
-  },
-  // Add this section to handle the punycode deprecation warning
+  // Add this section to handle the punycode deprecation warning and canvas issues
   webpack: (config, { isServer, dev }) => {
     // The existing webpack configuration will be merged with this
     if (!isServer) {
