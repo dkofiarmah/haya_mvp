@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "vercel-build": "pnpm install --no-frozen-lockfile && CANVAS_DISABLE=1 next build"
+    "vercel-build": "CANVAS_DISABLE=1 next build"
   },
   "dependencies": {
     "@edge-runtime/primitives": "^6.0.0",

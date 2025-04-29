@@ -29,6 +29,23 @@ const nextConfig = {
   experimental: {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
+    optimizeCss: true,
+    parallelServerCompiles: true,
+  },
+  webpack: (config, { isServer }) => {
+    // Handle the canvas module in webpack
+    if (isServer) {
+      config.externals = [...config.externals, 'canvas'];
+    }
+    
+    // Add a fallback for the canvas module
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      canvas: false,
+    };
+    
+    return config;
+  },
     parallelServerCompiles: true,
     optimizeCss: true,
   },
