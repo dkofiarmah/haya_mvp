@@ -56,9 +56,9 @@ class Image {
   }
 }
 
-module.exports = {
-  Canvas,
-  Image,
-  createCanvas: (width, height) => new Canvas(width, height),
-  loadImage: () => Promise.resolve(new Image()),
-};
+// ES modules export
+const createCanvas = (width, height) => new Canvas(width, height);
+const loadImage = () => Promise.resolve(new Image());
+
+export { Canvas, Image, createCanvas, loadImage };
+export default { Canvas, Image, createCanvas, loadImage };

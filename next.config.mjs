@@ -33,7 +33,8 @@ const nextConfig = {
       if (!isServer) {
         config.resolve.fallback = {
           ...config.resolve.fallback,
-          punycode: require.resolve('punycode.js'),
+          // Use dynamic import instead of require.resolve for ES modules
+          punycode: false, // We'll handle this differently in ES modules
           canvas: false,
           'canvas-prebuilt': false,
           fs: false,
@@ -47,13 +48,8 @@ const nextConfig = {
         config.resolve.alias = {};
       }
       
-      // Create explicit alias for critters
-      try {
-        config.resolve.alias.critters = require.resolve('critters');
-      } catch (error) {
-        console.warn('Could not resolve critters module, using local fallback');
-        config.resolve.alias.critters = './app/workaround.js';
-      }
+      // Create explicit alias for critters - modified for ES modules
+      config.resolve.alias.critters = './app/workaround.js';
       
       // Add all problematic packages to externals
       config.externals = [
@@ -92,6 +88,6 @@ const nextConfig = {
       return config;
     }
   },
-}
+};
 
 export default nextConfig;

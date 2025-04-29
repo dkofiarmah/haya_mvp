@@ -31,6 +31,14 @@ export async function createServerClient() {
 }
 
 /**
+ * Alias for createServerClient to support direct server actions
+ * that expect this function name
+ */
+export async function createDirectServerClient() {
+  return createServerClient()
+}
+
+/**
  * Legacy function for backward compatibility
  * @deprecated - Use createServerClient instead
  */

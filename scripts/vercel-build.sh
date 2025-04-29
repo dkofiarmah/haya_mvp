@@ -30,9 +30,18 @@ node ./scripts/verify-modules.js || {
 
 # Make sure we're using the correct Next.js config
 echo "Setting up Next.js configuration for Vercel..."
-# Make sure we're using next.config.js and not next.config.mjs
-if [ -f "next.config.mjs" ]; then
-  mv next.config.mjs next.config.mjs.backup
+# We're now using next.config.mjs instead of next.config.js
+if [ -f "next.config.js" ]; then
+  echo "Backing up next.config.js..."
+  mv next.config.js next.config.js.backup
+fi
+
+# Make sure next.config.mjs exists and is properly formatted
+if [ ! -f "next.config.mjs" ]; then
+  echo "Creating next.config.mjs..."
+  cp next.config.js.backup next.config.mjs
+  # Replace module.exports with export default
+  sed -i 's/module.exports = nextConfig;/export default nextConfig;/g' next.config.mjs
 fi
 
 # Double check that workaround.js exists
@@ -46,20 +55,17 @@ if [ ! -f "./app/workaround.js" ]; then
  */
 
 // Provide a fallback for the critters module
-export const crittersWorkaround = () => {
-  try {
-    // Try to load the critters module
-    const critters = require('critters');
-    return critters;
-  } catch (error) {
-    // Return a mock implementation if the real module can't be loaded
-    console.warn('WARNING: Could not load critters module, using mock implementation');
-    return {
-      process: async (html) => html,
-      // Add other methods as needed
-    };
-  }
+// ES Module version (no require statements)
+const crittersWorkaround = {
+  process: async (html) => html,
+  // Add other methods as needed
 };
+
+// Default export for ES modules
+export default crittersWorkaround;
+
+// Named exports
+export { crittersWorkaround };
 
 // Other workarounds can be added here as needed
 EOL
@@ -128,12 +134,12 @@ class Image {
   }
 }
 
-module.exports = {
-  Canvas,
-  Image,
-  createCanvas: (width, height) => new Canvas(width, height),
-  loadImage: () => Promise.resolve(new Image()),
-};
+// ES modules export
+const createCanvas = (width, height) => new Canvas(width, height);
+const loadImage = () => Promise.resolve(new Image());
+
+export { Canvas, Image, createCanvas, loadImage };
+export default { Canvas, Image, createCanvas, loadImage };
 EOL
 fi
 

@@ -4,19 +4,16 @@
  */
 
 // Provide a fallback for the critters module
-export const crittersWorkaround = () => {
-  try {
-    // Try to load the critters module
-    const critters = require('critters');
-    return critters;
-  } catch (error) {
-    // Return a mock implementation if the real module can't be loaded
-    console.warn('WARNING: Could not load critters module, using mock implementation');
-    return {
-      process: async (html) => html,
-      // Add other methods as needed
-    };
-  }
+// ES Module version (no require statements)
+const crittersWorkaround = {
+  process: async (html) => html,
+  // Add other methods as needed
 };
+
+// Default export for ES modules
+export default crittersWorkaround;
+
+// Named exports
+export { crittersWorkaround };
 
 // Other workarounds can be added here as needed
