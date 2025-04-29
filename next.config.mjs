@@ -14,7 +14,11 @@ const nextConfig = {
   experimental: {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
-    optimizeCss: true,
+    optimizeCss: {
+      cssnano: {
+        preset: 'default',
+      },
+    },
     parallelServerCompiles: true,
     // Disable output file tracing entirely to avoid the (dashboard) route issue
     outputFileTracing: false,
@@ -40,6 +44,11 @@ const nextConfig = {
         path: false,
         os: false
       };
+    }
+    
+    // Make sure critters is properly resolved
+    if (!config.resolve.alias) {
+      config.resolve.alias = {};
     }
     
     // Add canvas and related packages to the list of external packages

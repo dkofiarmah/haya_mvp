@@ -14,7 +14,11 @@ const nextConfig = {
   experimental: {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
-    optimizeCss: true,
+    optimizeCss: {
+      cssnano: {
+        preset: 'default',
+      },
+    },
     parallelServerCompiles: true,
   },
   // Add this section to handle the punycode deprecation warning and canvas issues
@@ -38,6 +42,11 @@ const nextConfig = {
         path: false,
         os: false
       };
+    }
+    
+    // Make sure critters is properly resolved
+    if (!config.resolve.alias) {
+      config.resolve.alias = {};
     }
     
     // Add canvas and related packages to the list of external packages
