@@ -5,9 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "vercel-prebuild": "mkdir -p scripts && chmod +x scripts/cleanup-canvas.sh",
-    "vercel-build": "pnpm run vercel-prebuild && node -e \"require('fs').existsSync('./scripts/cleanup-canvas.sh') && require('child_process').execSync('./scripts/cleanup-canvas.sh')\" && next build",
-    "postinstall": "mkdir -p scripts && chmod +x scripts/cleanup-canvas.sh && ./scripts/cleanup-canvas.sh || echo 'Canvas cleanup skipped'",
+    "vercel-prebuild": "mkdir -p scripts && echo '#!/bin/sh\necho \"Removing canvas from node_modules...\"\nrm -rf node_modules/canvas\nrm -rf node_modules/jsdom/node_modules/canvas\nfind node_modules -type d -name canvas -exec rm -rf {} \\; 2>/dev/null || true\nrm -rf node_modules/canvas-prebuilt\nfind node_modules -type d -name canvas-prebuilt -exec rm -rf {} \\; 2>/dev/null || true\necho \"Canvas cleanup complete\"\nexit 0' > scripts/cleanup-canvas.sh && chmod +x scripts/cleanup-canvas.sh",
+    "vercel-build": "pnpm run vercel-prebuild && ./scripts/cleanup-canvas.sh && next build",
+    "postinstall": "mkdir -p scripts && echo '#!/bin/sh\necho \"Removing canvas from node_modules...\"\nrm -rf node_modules/canvas\nrm -rf node_modules/jsdom/node_modules/canvas\nfind node_modules -type d -name canvas -exec rm -rf {} \\; 2>/dev/null || true\nrm -rf node_modules/canvas-prebuilt\nfind node_modules -type d -name canvas-prebuilt -exec rm -rf {} \\; 2>/dev/null || true\necho \"Canvas cleanup complete\"\nexit 0' > scripts/cleanup-canvas.sh && chmod +x scripts/cleanup-canvas.sh && ./scripts/cleanup-canvas.sh || echo 'Canvas cleanup skipped'",
     "start": "next start",
     "lint": "next lint"
   },

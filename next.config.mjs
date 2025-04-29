@@ -62,6 +62,16 @@ const nextConfig = {
           canvas: '@napi-rs/canvas'
         };
       }
+    } else {
+      // For client side, use our mock
+      if (Array.isArray(config.resolve.alias)) {
+        config.resolve.alias.push({ name: 'canvas', alias: './app/canvas-mock.js' });
+      } else {
+        config.resolve.alias = {
+          ...config.resolve.alias,
+          canvas: './app/canvas-mock.js'
+        };
+      }
     }
 
     // Important: return the modified config
