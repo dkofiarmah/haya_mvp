@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "vercel-build": "next build",
-    "postinstall": "sh ./scripts/cleanup-canvas.sh || true",
+    "postinstall": "mkdir -p scripts && sh ./scripts/cleanup-canvas.sh || echo 'Canvas cleanup skipped'",
     "start": "next start",
     "lint": "next lint"
   },
