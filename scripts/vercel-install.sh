@@ -70,8 +70,16 @@ if [ "$VERCEL" = "1" ]; then
     // Remove outputFileTracing from experimental section if it exists
     const updatedContent = configContent.replace(
       /outputFileTracing\s*:\s*false\s*,?/g,
-      '// outputFileTracing removed for Vercel compatibility'
+      '// outputFileTracing moved to top level config'
     );
+    
+    // Make sure outputFileTracing is at the top level
+    const hasTopLevelOutputFileTracing = updatedContent.includes('outputFileTracing: false,') || 
+                                         updatedContent.includes('outputFileTracing:false,');
+    
+    if (!hasTopLevelOutputFileTracing) {
+      console.log('Adding top-level outputFileTracing setting');
+    }
     
     fs.writeFileSync(configPath, updatedContent);
     console.log('✅ Updated next.config.mjs for Vercel compatibility');

@@ -1,6 +1,6 @@
-.github
-.vscode
 .git
 node_modules
-README.md
-docs/
+.next/cache
+tsconfig.tsbuildinfo
+.env*.local
+*.log
