@@ -4,7 +4,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: true    // This will skip TypeScript type checking
   },
   images: {
     unoptimized: true,
@@ -16,9 +16,6 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     optimizeCss: true,
     parallelServerCompiles: true,
-    outputFileTracingExcludes: {
-      '*': ['node_modules/**/*', 'canvas/**/*']
-    },
   },
   // Add this section to handle the punycode deprecation warning and canvas issues
   webpack: (config, { isServer, dev }) => {

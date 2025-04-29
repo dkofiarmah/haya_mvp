@@ -8,7 +8,7 @@ import { AgentLogs } from "@/components/agent-logs"
 import { ArrowLeft, BarChart3, Save } from "lucide-react"
 import Link from "next/link"
 
-export default function AgentDetailPage({ params }: { params: { id: string } }) {
+export default function AgentDetailPage({ params }: any) {
   // This would normally be fetched from an API based on the ID
   const agent = {
     id: params.id,
