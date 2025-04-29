@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "vercel-prebuild": "mkdir -p scripts && echo '#!/bin/sh\necho \"Removing canvas from node_modules...\"\nrm -rf node_modules/canvas\nrm -rf node_modules/jsdom/node_modules/canvas\nfind node_modules -type d -name canvas -exec rm -rf {} \\; 2>/dev/null || true\nrm -rf node_modules/canvas-prebuilt\nfind node_modules -type d -name canvas-prebuilt -exec rm -rf {} \\; 2>/dev/null || true\necho \"Canvas cleanup complete\"\nexit 0' > scripts/cleanup-canvas.sh && chmod +x scripts/cleanup-canvas.sh",
-    "vercel-build": "./scripts/cleanup-canvas.sh && NODE_OPTIONS=\"--max_old_space_size=4096\" NEXT_TELEMETRY_DISABLED=1 next build --no-lint",
-    "postinstall": "mkdir -p scripts && echo '#!/bin/sh\necho \"Removing canvas from node_modules...\"\nrm -rf node_modules/canvas\nrm -rf node_modules/jsdom/node_modules/canvas\nfind node_modules -type d -name canvas -exec rm -rf {} \\; 2>/dev/null || true\nrm -rf node_modules/canvas-prebuilt\nfind node_modules -type d -name canvas-prebuilt -exec rm -rf {} \\; 2>/dev/null || true\necho \"Canvas cleanup complete\"\nexit 0' > scripts/cleanup-canvas.sh && chmod +x scripts/cleanup-canvas.sh && ./scripts/cleanup-canvas.sh || echo 'Canvas cleanup skipped'",
+    "clean-build": "bash ./scripts/clean-build.sh",
+    "test-vercel-build": "bash ./scripts/test-vercel-build.sh",
+    "vercel-build": "bash ./scripts/vercel-build.sh",
+    "pre-deploy-check": "bash ./scripts/pre-deploy-check.sh",
     "start": "next start",
     "lint": "next lint"
   },

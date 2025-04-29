@@ -1,6 +1,6 @@
 {
-  "buildCommand": "bash ./scripts/clean-build.sh",
-  "installCommand": "pnpm install --no-frozen-lockfile",
+  "buildCommand": "bash ./scripts/vercel-build.sh",
+  "installCommand": "bash ./scripts/vercel-install.sh",
   "framework": "nextjs",
   "outputDirectory": ".next",
   "cleanUrls": true,

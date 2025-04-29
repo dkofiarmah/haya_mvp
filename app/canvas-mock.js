@@ -1,63 +1,64 @@
 /**
- * Canvas Mock for Vercel
- * 
- * This file provides a mock implementation of the canvas module
- * for environments where native canvas dependencies aren't available.
+ * Mock implementation of the canvas module for client-side usage
+ * This avoids issues with the canvas module which is primarily for server-side usage
  */
 
-class MockContext {
-  constructor() {
-    this.fillStyle = '#000000';
-    this.font = '10px sans-serif';
-    this.textAlign = 'start';
-    this.textBaseline = 'alphabetic';
-  }
-  
-  fillRect() {}
-  fillText() {}
-  measureText() { return { width: 0 }; }
-  getImageData() { return { data: new Uint8ClampedArray() }; }
-  putImageData() {}
-  drawImage() {}
-  scale() {}
-  clearRect() {}
-}
-
-class MockCanvas {
+// Export a mock Canvas class
+class Canvas {
   constructor(width, height) {
-    this.width = width || 300;
-    this.height = height || 150;
+    this.width = width;
+    this.height = height;
   }
-  
+
   getContext() {
-    return new MockContext();
+    return {
+      fillRect: () => {},
+      clearRect: () => {},
+      getImageData: (x, y, w, h) => ({
+        data: new Array(w * h * 4),
+      }),
+      putImageData: () => {},
+      createImageData: () => [],
+      setTransform: () => {},
+      drawImage: () => {},
+      save: () => {},
+      fillText: () => {},
+      restore: () => {},
+      beginPath: () => {},
+      moveTo: () => {},
+      lineTo: () => {},
+      closePath: () => {},
+      stroke: () => {},
+      translate: () => {},
+      scale: () => {},
+      rotate: () => {},
+      arc: () => {},
+      fill: () => {},
+      measureText: () => ({ width: 0 }),
+      transform: () => {},
+      rect: () => {},
+      clip: () => {},
+    };
   }
-  
-  toBuffer() {
-    return Buffer.from([]);
-  }
-  
+
   toDataURL() {
-    return 'data:image/png;base64,';
-  }
-  
-  createPNGStream() {
-    const { Readable } = require('stream');
-    const readable = new Readable();
-    readable.push(null);
-    return readable;
+    return '';
   }
 }
 
-const createCanvas = (width, height) => {
-  return new MockCanvas(width, height);
-};
+// Export a mock Image class
+class Image {
+  constructor() {
+    this.onload = null;
+    this.width = 0;
+    this.height = 0;
+    this.src = '';
+  }
+}
 
-// Export the mock functions and constructors
 module.exports = {
-  createCanvas,
-  Canvas: MockCanvas,
-  Image: class {},
-  ImageData: class {},
-  PNGStream: class {}
+  Canvas,
+  Image,
+  createCanvas: (width, height) => new Canvas(width, height),
+  loadImage: () => Promise.resolve(new Image()),
 };

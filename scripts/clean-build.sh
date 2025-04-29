@@ -14,6 +14,10 @@ echo "Ensuring dependencies are properly installed..."
 npm list uuid || npm install uuid @types/uuid
 npm list critters || npm install critters@0.0.20
 
+# Test if critters module can be loaded
+echo "Testing if critters module can be loaded..."
+node ./scripts/test-critters.js || npm install critters@0.0.20
+
 # Run the vercel-build script from package.json which already handles canvas cleanup and build
 echo "Running vercel-build script..."
 npm run vercel-build

@@ -1,58 +1,22 @@
 /**
- * Workaround helpers for organization-related queries
+ * This file contains workarounds for module resolution issues in the Vercel environment
+ * It exports patched versions of problematic dependencies
  */
 
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
-
-/**
- * Get organizations for the current user using a database function instead of direct queries
- * This avoids the infinite recursion issue
- */
-export async function getUserOrganizationsWorkaround() {
+// Provide a fallback for the critters module
+export const crittersWorkaround = () => {
   try {
-    const { data, error } = await supabase.rpc('get_my_organizations');
-    
-    if (error) {
-      console.error('Error fetching user organizations with workaround:', error);
-      return [];
-    }
-    
-    return data || [];
+    // Try to load the critters module
+    const critters = require('critters');
+    return critters;
   } catch (error) {
-    console.error('Exception fetching user organizations with workaround:', error);
-    return [];
+    // Return a mock implementation if the real module can't be loaded
+    console.warn('WARNING: Could not load critters module, using mock implementation');
+    return {
+      process: async (html) => html,
+      // Add other methods as needed
+    };
   }
-}
+};
 
-/**
- * Check if a user belongs to an organization using a direct query
- * This avoids the recursive RLS policies
- */
-export async function checkUserOrganizationAccess(orgId) {
-  try {
-    const { data: userData } = await supabase.auth.getUser();
-    
-    if (!userData?.user?.id) {
-      return false;
-    }
-    
-    const { data, error } = await supabase.rpc('check_user_in_organization', {
-      org_uuid: orgId
-    });
-    
-    if (error) {
-      console.error('Error checking organization access:', error);
-      return false;
-    }
-    
-    return data === true;
-  } catch (error) {
-    console.error('Exception checking organization access:', error);
-    return false;
-  }
-}
+// Other workarounds can be added here as needed
