@@ -42,14 +42,19 @@ const nextConfig = {
       };
     }
     
-    // Handle canvas and related package issues in all environments
+    // Enhanced handling for canvas and related package issues in all environments
+    
     // Add canvas and related packages to the list of external packages
     config.externals = [
       ...(config.externals || []), 
       'canvas',
       'jsdom',
       'canvas-prebuilt',
-      'pdfjs-dist'
+      'pdfjs-dist',
+      // Add additional externals for node-canvas dependencies
+      'libuuid.so.1',
+      'libmount.so.1',
+      'libblkid.so.1'
     ];
     
     // Add fallbacks for canvas-related dependencies
@@ -62,14 +67,22 @@ const nextConfig = {
       'pango-1.0': false,
       'cairo': false,
       'jsdom': false,
-      'pdfjs-dist': false
+      'pdfjs-dist': false,
+      // Additional fallbacks
+      fs: false,
+      path: false,
+      os: false
     };
     
-    // Add MiniCssExtractPlugin
-    config.plugins.push(new MiniCssExtractPlugin({
-      filename: 'static/css/[name].[contenthash].css',
-      chunkFilename: 'static/css/[id].[contenthash].css',
-    }));
+    // Set environment variables to disable canvas if needed
+    if (!isServer) {
+      config.plugins.push(
+        new MiniCssExtractPlugin({
+          filename: 'static/css/[name].[contenthash].css',
+          chunkFilename: 'static/css/[id].[contenthash].css',
+        })
+      );
+    }
 
     // Important: return the modified config
     return config;
