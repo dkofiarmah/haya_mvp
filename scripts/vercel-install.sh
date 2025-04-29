@@ -22,6 +22,7 @@ fi
 echo "Installing specific versions of critical packages..."
 npm install critters@0.0.20
 npm install punycode.js@2.3.1
+npm install glob@10.3.10
 
 # Verify module installations
 echo "Verifying module installations..."
@@ -32,6 +33,9 @@ try {
   
   const punycode = require('punycode.js');
   console.log('✅ Punycode.js module found:', typeof punycode);
+  
+  const glob = require('glob');
+  console.log('✅ Glob module found:', typeof glob);
   
   console.log('✅ Dependencies installation complete');
 } catch (error) {
