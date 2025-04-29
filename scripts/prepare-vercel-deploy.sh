@@ -35,6 +35,24 @@ EOL
   echo "✅ Created dashboard trace helper"
 fi
 
+# Create page-specific trace helper for the dashboard route
+PAGE_HELPER_PATH="app/(dashboard)/_page_trace_helper.js"
+if [ -f "$PAGE_HELPER_PATH" ]; then
+  echo "✅ Dashboard page trace helper exists"
+else
+  echo "Creating trace helper for dashboard page..."
+  cat > "$PAGE_HELPER_PATH" << 'EOL'
+/**
+ * This file helps Vercel properly trace client references for the dashboard page.
+ * It should not be imported anywhere.
+ */
+
+// This stub ensures the page_client-reference-manifest.js gets generated correctly
+export const PageClientReferenceManifestHelper = true;
+EOL
+  echo "✅ Created dashboard page trace helper"
+fi
+
 # Check for backup files and clean up if necessary
 if [ -f "next.config.js.backup" ] || [ -f "next.config.mjs.backup" ]; then
   echo "ℹ️ Backup config files found, these will be ignored during deployment"
