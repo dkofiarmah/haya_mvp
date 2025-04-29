@@ -68,10 +68,12 @@ const nextConfig = {
     if (isServer) {
       if (Array.isArray(config.resolve.alias)) {
         config.resolve.alias.push({ name: 'canvas', alias: '@napi-rs/canvas' });
+        config.resolve.alias.push({ name: 'text2png', alias: './lib/canvas-adapter.js' });
       } else {
         config.resolve.alias = {
           ...config.resolve.alias,
-          canvas: '@napi-rs/canvas'
+          canvas: '@napi-rs/canvas',
+          text2png: './lib/canvas-adapter.js'
         };
       }
     }
