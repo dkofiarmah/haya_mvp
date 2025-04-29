@@ -145,4 +145,24 @@ fi
 
 # Build with optimizeCss disabled for Vercel
 echo "Starting build process with optimizeCss disabled..."
-VERCEL=1 NODE_OPTIONS="--max-old-space-size=4096" ./node_modules/.bin/next build
+
+# Verify client reference manifest helpers exist
+echo "Checking client reference manifest helpers..."
+if [ ! -f "./app/(dashboard)/_vercel_trace_helper.js" ]; then
+  echo "Creating trace helper for dashboard pages..."
+  mkdir -p ./app/\(dashboard\)
+  cat > ./app/\(dashboard\)/_vercel_trace_helper.js << 'EOL'
+/**
+ * This file helps Vercel properly trace file dependencies for the dashboard.
+ * It should not be imported anywhere.
+ */
+
+// This stub ensures the client reference manifest gets generated correctly
+export const VercelClientReferenceManifestHelper = true;
+EOL
+  echo "✅ Created dashboard trace helper"
+fi
+
+# Run Next.js build with file tracing disabled
+echo "Building with file tracing disabled..."
+VERCEL=1 NODE_OPTIONS="--max-old-space-size=4096" NEXT_DISABLE_FILE_SYSTEM_CACHE=1 ./node_modules/.bin/next build

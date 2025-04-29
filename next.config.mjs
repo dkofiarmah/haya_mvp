@@ -10,6 +10,8 @@ const nextConfig = {
     unoptimized: true,  // Disable Next.js image optimization
   },
   reactStrictMode: true,
+  // Explicitly disable file tracing at the top level (important for Vercel)
+  outputFileTracing: false,
   experimental: {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
@@ -17,8 +19,6 @@ const nextConfig = {
     optimizeCss: false,
     parallelServerCompiles: true,
   },
-  // This needs to be at the top level, not in experimental section for Next.js 15+
-  outputFileTracing: false,
   // Custom webpack configuration
   webpack: (config, { isServer, dev }) => {
     try {
