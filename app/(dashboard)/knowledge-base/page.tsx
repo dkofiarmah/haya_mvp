@@ -1,4 +1,29 @@
-import type { Metadata } from "next"
+import type { Meta  const cookieStore = cookies();
+  const supabase = createServerClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        },
+        set(name: string, value: string, options: any) {
+          try {
+            cookieStore.set({ name, value, ...options });
+          } catch (error) {
+            // Handle cookie error in development
+          }
+        },
+        remove(name: string, options: any) {
+          try {
+            cookieStore.set({ name, value: '', ...options });
+          } catch (error) {
+            // Handle cookie error in development
+          }
+        },
+      },
+    }
+  );ata } from "next"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { DocumentsList } from "@/components/documents-list"
