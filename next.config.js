@@ -16,8 +16,8 @@ const nextConfig = {
     // Disable CSS optimization entirely for Vercel
     optimizeCss: false,
     parallelServerCompiles: true,
-    // Disable output file tracing to avoid route issues
-    outputFileTracing: false,
+    // Next.js 15.3.1 doesn't recognize outputFileTracing in experimental section
+    // outputFileTracing: false,
   },
   // Custom webpack configuration
   webpack: (config, { isServer, dev }) => {
