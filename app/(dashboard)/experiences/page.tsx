@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: 'Manage your travel experiences',
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function ExperiencesPage() {
   const { experiences } = await getExperiences();
   
