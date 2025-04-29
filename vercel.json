@@ -1,17 +1,30 @@
 {
-  "version": 2,
-  "devCommand": "pnpm dev",
-  "installCommand": "pnpm install --no-frozen-lockfile",
+  "buildCommand": "pnpm run vercel-build",
+  "installCommand": "pnpm install",
   "framework": "nextjs",
   "outputDirectory": ".next",
-  "builds": [
+  "cleanUrls": true,
+  "headers": [
     {
-      "src": "package.json",
-      "use": "@vercel/next@latest"
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
     }
   ],
-  "buildCommand": "pnpm run vercel-build",
   "env": {
-    "NODE_OPTIONS": "--max-old-space-size=4096"
+    "NEXT_TELEMETRY_DISABLED": "1",
+    "VERCEL": "1"
   }
 }

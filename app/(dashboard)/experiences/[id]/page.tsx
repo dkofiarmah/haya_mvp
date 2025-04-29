@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: 'View and manage travel experience details',
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function ExperiencePage({ params }: { params: { id: string } }) {
   // Fetch the experience data
   const experience = await getExperienceById(params.id)

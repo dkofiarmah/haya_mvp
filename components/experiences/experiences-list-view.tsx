@@ -47,7 +47,7 @@ interface Experience {
   name: string;
   description?: string;
   category?: string;
-  images?: string[];
+  images?: string[] | null;
   location?: string;
   price_per_person: number;
   currency?: string;
