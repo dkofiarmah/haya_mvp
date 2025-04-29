@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "vercel-build": "CANVAS_DISABLE=1 NODE_OPTIONS='--max_old_space_size=4096' next build"
+    "vercel-build": "CANVAS_DISABLE=1 NODE_OPTIONS='--max_old_space_size=4096' next build",
+    "canvas-install": "bash ./scripts/canvas-install.sh",
+    "postinstall": "npm run canvas-install"
   },
   "dependencies": {
     "@edge-runtime/primitives": "^6.0.0",

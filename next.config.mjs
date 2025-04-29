@@ -54,7 +54,8 @@ const nextConfig = {
       // Add additional externals for node-canvas dependencies
       'libuuid.so.1',
       'libmount.so.1',
-      'libblkid.so.1'
+      'libblkid.so.1',
+      'pixman-1'
     ];
     
     // Add fallbacks for canvas-related dependencies
@@ -73,8 +74,22 @@ const nextConfig = {
       path: false,
       os: false
     };
+
+    // If using canvas in server components, this helps prevent build failures
+    if (isServer) {
+      if (Array.isArray(config.resolve.alias)) {
+        config.resolve.alias.push({ name: 'canvas', alias: 'next/dist/compiled/noop' });
+        config.resolve.alias.push({ name: 'text2png', alias: 'next/dist/compiled/noop' });
+      } else {
+        config.resolve.alias = {
+          ...config.resolve.alias,
+          canvas: 'next/dist/compiled/noop',
+          text2png: 'next/dist/compiled/noop'
+        };
+      }
+    }
     
-    // Set environment variables to disable canvas if needed
+    // Add MiniCssExtractPlugin for client builds
     if (!isServer) {
       config.plugins.push(
         new MiniCssExtractPlugin({

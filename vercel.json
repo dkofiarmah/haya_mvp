@@ -1,7 +1,7 @@
 {
   "version": 2,
   "devCommand": "pnpm dev",
-  "installCommand": "pnpm install --no-frozen-lockfile",
+  "installCommand": "pnpm install --no-frozen-lockfile && pnpm run canvas-install",
   "framework": "nextjs",
   "outputDirectory": ".next",
   "builds": [
@@ -10,9 +10,10 @@
       "use": "@vercel/next@latest"
     }
   ],
-  "buildCommand": "pnpm run build",
+  "buildCommand": "pnpm run vercel-build",
   "env": {
     "NODE_OPTIONS": "--max-old-space-size=4096",
-    "CANVAS_DISABLE": "1"
+    "CANVAS_DISABLE": "1",
+    "CANVAS_SKIP_INSTALL": "1"
   }
 }
