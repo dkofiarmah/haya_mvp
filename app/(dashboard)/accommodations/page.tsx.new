@@ -1,0 +1,115 @@
+'use client'
+
+import { Suspense } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import { Filter, PlusCircle, Search } from "lucide-react"
+import { AccommodationsList } from "@/components/accommodations-list"
+
+// Component for the accommodations content
+function AccommodationsContent() {
+  return (
+    <>
+      <div className="flex flex-col gap-4 md:flex-row">
+        <div className="relative flex-1">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input type="search" placeholder="Search accommodations..." className="w-full pl-8" />
+        </div>
+        <Button variant="outline" size="icon">
+          <Filter className="h-4 w-4" />
+        </Button>
+      </div>
+
+      <Tabs defaultValue="all" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="all">
+            All Accommodations
+            <Badge variant="secondary" className="ml-2">
+              48
+            </Badge>
+          </TabsTrigger>
+          <TabsTrigger value="hotels">
+            Hotels
+            <Badge variant="secondary" className="ml-2">
+              22
+            </Badge>
+          </TabsTrigger>
+          <TabsTrigger value="villas">
+            Villas
+            <Badge variant="secondary" className="ml-2">
+              14
+            </Badge>
+          </TabsTrigger>
+          <TabsTrigger value="resorts">
+            Resorts
+            <Badge variant="secondary" className="ml-2">
+              12
+            </Badge>
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="all" className="space-y-4">
+          <AccommodationsList />
+        </TabsContent>
+        <TabsContent value="hotels" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Hotels</CardTitle>
+              <CardDescription>Luxury hotels and boutique properties.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">Hotels content will appear here.</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="villas" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Villas</CardTitle>
+              <CardDescription>Private villas and vacation homes.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">Villas content will appear here.</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="resorts" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Resorts</CardTitle>
+              <CardDescription>All-inclusive and luxury resorts.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">Resorts content will appear here.</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </>
+  );
+}
+
+export default function AccommodationsPage() {
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h2 className="text-3xl font-bold tracking-tight">Accommodations</h2>
+          <p className="text-muted-foreground">
+            Manage your knowledge base of accommodations that AI agents can recommend to clients.
+          </p>
+        </div>
+        <Button>
+          <PlusCircle className="mr-2 h-4 w-4" />
+          Add New Accommodation
+        </Button>
+      </div>
+
+      <Suspense fallback={<div className="flex justify-center p-4">Loading accommodations...</div>}>
+        <AccommodationsContent />
+      </Suspense>
+    </div>
+  )
+}

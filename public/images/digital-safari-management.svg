@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <rect width="600" height="400" fill="url(#paint0_linear)"/>
+  
+  <!-- Abstract patterns for visual interest -->
+  <circle cx="150" cy="100" r="120" fill="url(#paint1_radial)" opacity="0.4"/>
+  <circle cx="480" cy="300" r="140" fill="url(#paint2_radial)" opacity="0.3"/>
+  
+  <!-- Safari landscape silhouette -->
+  <path d="M0 280C120 260 240 300 360 280C480 260 600 290 600 280V400H0V280Z" fill="#1E293B" opacity="0.8"/>
+  <path d="M0 310C120 290 240 330 360 310C480 290 600 320 600 310V400H0V310Z" fill="#0F172A" opacity="0.9"/>
+  
+  <!-- Acacia trees silhouettes -->
+  <path d="M140 320L150 260L160 320H140Z" fill="#0F172A"/>
+  <path d="M150 260C150 260 130 230 120 240C110 250 150 260 150 260Z" fill="#0F172A"/>
+  <path d="M150 260C150 260 170 230 180 240C190 250 150 260 150 260Z" fill="#0F172A"/>
+  <path d="M150 240C150 240 130 210 120 220C110 230 150 240 150 240Z" fill="#0F172A"/>
+  <path d="M150 240C150 240 170 210 180 220C190 230 150 240 150 240Z" fill="#0F172A"/>
+  
+  <path d="M220 330L230 270L240 330H220Z" fill="#0F172A"/>
+  <path d="M230 270C230 270 210 240 200 250C190 260 230 270 230 270Z" fill="#0F172A"/>
+  <path d="M230 270C230 270 250 240 260 250C270 260 230 270 230 270Z" fill="#0F172A"/>
+  <path d="M230 250C230 250 210 220 200 230C190 240 230 250 230 250Z" fill="#0F172A"/>
+  <path d="M230 250C230 250 250 220 260 230C270 240 230 250 230 250Z" fill="#0F172A"/>
+  
+  <!-- Safari vehicle -->
+  <rect x="400" y="330" width="80" height="30" rx="8" fill="#334155"/>
+  <rect x="420" y="310" width="40" height="20" rx="6" fill="#334155"/>
+  <circle cx="420" cy="360" r="10" fill="#1E293B"/>
+  <circle cx="460" cy="360" r="10" fill="#1E293B"/>
+  
+  <!-- Animals silhouettes -->
+  <ellipse cx="320" cy="350" rx="30" ry="10" fill="#0F172A"/>
+  <path d="M320 350C320 350 310 330 320 320C330 310 340 330 340 340C340 350 320 350 320 350Z" fill="#0F172A"/>
+  
+  <!-- Birds in sky -->
+  <path d="M380 150C381.5 148 383 150 384.5 148C386 150 387.5 148 389 150" stroke="#94A3B8" stroke-width="1"/>
+  <path d="M400 160C401.5 158 403 160 404.5 158C406 160 407.5 158 409 160" stroke="#94A3B8" stroke-width="1"/>
+  <path d="M420 140C421.5 138 423 140 424.5 138C426 140 427.5 138 429 140" stroke="#94A3B8" stroke-width="1"/>
+  
+  <!-- Stars and sparkles -->
+  <circle cx="100" cy="80" r="1" fill="#F8FAFC"/>
+  <circle cx="160" cy="120" r="1" fill="#F8FAFC"/>
+  <circle cx="220" cy="100" r="1" fill="#F8FAFC"/>
+  <circle cx="280" cy="140" r="1" fill="#F8FAFC"/>
+  <circle cx="340" cy="90" r="1" fill="#F8FAFC"/>
+  <circle cx="400" cy="130" r="1" fill="#F8FAFC"/>
+  <circle cx="460" cy="110" r="1" fill="#F8FAFC"/>
+  <circle cx="520" cy="70" r="1" fill="#F8FAFC"/>
+  
+  <!-- Digital elements representing AI assistance -->
+  <rect x="100" y="180" width="120" height="80" rx="10" fill="#334155" opacity="0.7"/>
+  <rect x="110" y="200" width="100" height="6" rx="3" fill="#94A3B8" opacity="0.8"/>
+  <rect x="110" y="215" width="80" height="6" rx="3" fill="#94A3B8" opacity="0.8"/>
+  <rect x="110" y="230" width="60" height="6" rx="3" fill="#94A3B8" opacity="0.8"/>
+  <circle cx="140" cy="190" r="4" fill="#38BDF8"/>
+  
+  <rect x="400" y="160" width="120" height="80" rx="10" fill="#334155" opacity="0.7"/>
+  <rect x="410" y="180" width="100" height="6" rx="3" fill="#94A3B8" opacity="0.8"/>
+  <rect x="410" y="195" width="80" height="6" rx="3" fill="#94A3B8" opacity="0.8"/>
+  <rect x="410" y="210" width="60" height="6" rx="3" fill="#94A3B8" opacity="0.8"/>
+  <circle cx="440" cy="170" r="4" fill="#FB923C"/>
+  
+  <!-- People/operators silhouettes -->
+  <circle cx="270" cy="220" r="15" fill="#475569"/>
+  <rect x="265" y="235" width="10" height="25" fill="#475569"/>
+  <rect x="255" y="245" width="30" height="6" fill="#475569"/>
+  
+  <circle cx="320" cy="200" r="12" fill="#334155"/>
+  <rect x="315" y="212" width="10" height="20" fill="#334155"/>
+  <rect x="305" y="222" width="30" height="5" fill="#334155"/>
+  
+  <!-- Tour group -->
+  <circle cx="520" cy="240" r="10" fill="#334155"/>
+  <rect x="516" y="250" width="8" height="20" fill="#334155"/>
+  
+  <circle cx="500" cy="245" r="8" fill="#475569"/>
+  <rect x="497" y="253" width="6" height="15" fill="#475569"/>
+  
+  <circle cx="540" cy="242" r="9" fill="#1E293B"/>
+  <rect x="536" y="251" width="8" height="18" fill="#1E293B"/>
+  
+  <!-- Connected floating UI elements representing digital management -->
+  <path d="M250 120L270 140M330 120L310 140M290 160L290 190" stroke="#94A3B8" stroke-width="1" stroke-dasharray="4 4"/>
+  <rect x="230" y="80" width="120" height="40" rx="8" fill="#0F172A" opacity="0.5"/>
+  <rect x="250" y="95" width="80" height="4" rx="2" fill="#E2E8F0" opacity="0.8"/>
+  <rect x="250" y="105" width="50" height="4" rx="2" fill="#E2E8F0" opacity="0.6"/>
+  
+  <!-- Gradient definitions -->
+  <defs>
+    <linearGradient id="paint0_linear" x1="300" y1="0" x2="300" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0F172A"/>
+      <stop offset="0.4" stop-color="#1E40AF"/>
+      <stop offset="0.8" stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <radialGradient id="paint1_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(150 100) rotate(90) scale(120)">
+      <stop offset="0" stop-color="#3B82F6" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#1E3A8A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="paint2_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(480 300) rotate(90) scale(140)">
+      <stop offset="0" stop-color="#FB923C" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#7C2D12" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

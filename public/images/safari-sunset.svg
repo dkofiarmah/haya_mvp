@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500" height="400" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <rect width="500" height="400" fill="url(#paint0_linear)"/>
+  
+  <!-- Sun/sunset -->
+  <circle cx="250" cy="120" r="60" fill="#F59E0B" opacity="0.9"/>
+  <circle cx="250" cy="120" r="80" fill="#F59E0B" opacity="0.4"/>
+  <circle cx="250" cy="120" r="100" fill="#F59E0B" opacity="0.2"/>
+  
+  <!-- Savanna landscape - distant mountains -->
+  <path d="M0 250C50 230 120 260 180 240C240 220 300 245 360 230C420 215 460 240 500 230V400H0V250Z" fill="#4B5563" opacity="0.4"/>
+  
+  <!-- Foreground landscape -->
+  <path d="M0 280C60 260 130 290 190 270C250 250 310 275 370 260C430 245 470 270 500 260V400H0V280Z" fill="#374151" opacity="0.7"/>
+  
+  <!-- Ground/savanna -->
+  <path d="M0 320C60 300 130 330 190 310C250 290 310 315 370 300C430 285 470 310 500 300V400H0V320Z" fill="#1F2937"/>
+  
+  <!-- Iconic acacia tree silhouette -->
+  <path d="M190 320L200 260L210 320H190Z" fill="#111827"/>
+  <path d="M200 260C200 260 180 220 160 240C140 260 200 260 200 260Z" fill="#111827"/>
+  <path d="M200 260C200 260 220 220 240 240C260 260 200 260 200 260Z" fill="#111827"/>
+  <path d="M200 230C200 230 180 190 160 210C140 230 200 230 200 230Z" fill="#111827"/>
+  <path d="M200 230C200 230 220 190 240 210C260 230 200 230 200 230Z" fill="#111827"/>
+  <path d="M200 200C200 200 180 160 160 180C140 200 200 200 200 200Z" fill="#111827"/>
+  <path d="M200 200C200 200 220 160 240 180C260 200 200 200 200 200Z" fill="#111827"/>
+  
+  <!-- Wildlife silhouettes -->
+  <path d="M300 350C300 350 315 345 320 350C325 355 330 350 335 350C340 350 345 355 350 350C355 345 360 350 360 350V370H300V350Z" fill="#111827"/>
+  <ellipse cx="330" cy="330" rx="20" ry="15" fill="#111827"/>
+  <ellipse cx="410" cy="360" rx="30" ry="10" fill="#111827"/>
+  <path d="M410 360C410 360 400 340 410 330C420 320 430 340 430 350C430 360 410 360 410 360Z" fill="#111827"/>
+  
+  <!-- Tour vehicles -->
+  <rect x="100" y="350" width="50" height="20" rx="5" fill="#1F2937"/>
+  <rect x="110" y="335" width="30" height="15" rx="3" fill="#1F2937"/>
+  <circle cx="110" cy="370" r="7" fill="#111827"/>
+  <circle cx="140" cy="370" r="7" fill="#111827"/>
+  
+  <!-- Stars in the sky -->
+  <circle cx="50" cy="80" r="1.5" fill="#FFFFFF"/>
+  <circle cx="120" cy="60" r="1.5" fill="#FFFFFF"/>
+  <circle cx="170" cy="90" r="1.5" fill="#FFFFFF"/>
+  <circle cx="320" cy="70" r="1.5" fill="#FFFFFF"/>
+  <circle cx="370" cy="40" r="1.5" fill="#FFFFFF"/>
+  <circle cx="420" cy="90" r="1.5" fill="#FFFFFF"/>
+  <circle cx="470" cy="50" r="1.5" fill="#FFFFFF"/>
+  
+  <!-- Small birds -->
+  <path d="M420 150C421.5 148 423 150 424.5 148C426 150 427.5 148 429 150" stroke="#D1D5DB" stroke-width="1"/>
+  <path d="M380 130C381.5 128 383 130 384.5 128C386 130 387.5 128 389 130" stroke="#D1D5DB" stroke-width="1"/>
+  <path d="M350 160C351.5 158 353 160 354.5 158C356 160 357.5 158 359 160" stroke="#D1D5DB" stroke-width="1"/>
+  
+  <!-- Gradient definitions -->
+  <defs>
+    <linearGradient id="paint0_linear" x1="250" y1="0" x2="250" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0F172A"/>
+      <stop offset="0.3" stop-color="#1E3A8A"/>
+      <stop offset="0.6" stop-color="#7C2D12"/>
+      <stop offset="1" stop-color="#1F2937"/>
+    </linearGradient>
+  </defs>
+</svg>

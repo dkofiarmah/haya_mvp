@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "devCommand": "pnpm dev",
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "framework": "nextjs",
+  "outputDirectory": ".next",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next@latest"
+    }
+  ],
+  "buildCommand": "pnpm run build",
+  "env": {
+    "NODE_OPTIONS": "--max-old-space-size=4096"
+  }
+}
