@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm run vercel-build",
+  "buildCommand": "mkdir -p scripts && echo '#!/bin/sh\necho \"Removing canvas from node_modules...\"\nrm -rf node_modules/canvas\nrm -rf node_modules/jsdom/node_modules/canvas\nfind node_modules -type d -name canvas -exec rm -rf {} \\; 2>/dev/null || true\nrm -rf node_modules/canvas-prebuilt\nfind node_modules -type d -name canvas-prebuilt -exec rm -rf {} \\; 2>/dev/null || true\necho \"Canvas cleanup complete\"\nexit 0' > scripts/cleanup-canvas.sh && chmod +x scripts/cleanup-canvas.sh && pnpm run vercel-build",
   "installCommand": "pnpm install --no-frozen-lockfile",
   "framework": "nextjs",
   "outputDirectory": ".next",
