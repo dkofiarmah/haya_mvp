@@ -43,28 +43,6 @@ next-env.d.ts
 *.sqlite
 *.db
 /database/*.sql
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Local scripts
-*.sh
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# database files
-*.sql
-*.sqlite
-*.db
 /prisma/migrations/
 
 # IDE files
@@ -85,6 +63,9 @@ logs
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Local scripts
+*.sh
 
 # Temporary files
 *.tmp
