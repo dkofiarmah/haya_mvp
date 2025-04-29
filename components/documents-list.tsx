@@ -12,18 +12,7 @@ import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
 import { deleteDocument } from "@/lib/documents/document-service"
 
-interface Document {
-  id: string
-  name: string
-  description: string
-  file_type: string
-  file_size: number
-  status: "processing" | "active" | "error"
-  created_at: string
-  updated_at: string
-  error_message?: string
-  metadata?: any
-}
+import type { Document } from '@/types/documents'
 
 interface DocumentsListProps {
   documents: Document[]
@@ -93,10 +82,10 @@ export function DocumentsList({ documents, assistantId, onAddToAssistant, onRemo
             Processing
           </Badge>
         )
-      case "active":
+      case "ready":
         return (
           <Badge variant="outline" className="bg-green-500/10 text-green-500">
-            Active
+            Ready
           </Badge>
         )
       case "error":

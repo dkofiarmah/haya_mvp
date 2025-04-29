@@ -1,39 +1,13 @@
-import type { Meta  const cookieStore = cookies();
-  const supabase = createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value;
-        },
-        set(name: string, value: string, options: any) {
-          try {
-            cookieStore.set({ name, value, ...options });
-          } catch (error) {
-            // Handle cookie error in development
-          }
-        },
-        remove(name: string, options: any) {
-          try {
-            cookieStore.set({ name, value: '', ...options });
-          } catch (error) {
-            // Handle cookie error in development
-          }
-        },
-      },
-    }
-  );ata } from "next"
+import type { Metadata } from "next"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { DocumentsList } from "@/components/documents-list"
 import { Plus } from "lucide-react"
-import { cookies } from 'next/headers'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import type { Database } from '@/types/supabase'
+import { createClient } from '@/lib/supabase/server'
+import type { Document } from '@/types/documents'
 
 export const metadata: Metadata = {
-  title: "Knowledge Base | Luxuria",
+  title: "Knowledge Base | Haya",
   description: "Manage the knowledge sources for your AI assistants",
 }
 
@@ -41,7 +15,7 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export default async function KnowledgeBasePage() {
-  const supabase = createServerComponentClient<Database>({ cookies })
+  const supabase = createClient()
   const { data: documents } = await supabase
     .from("documents")
     .select("*")

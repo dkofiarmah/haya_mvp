@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import type { Database } from '@/types/supabase'
 
@@ -7,7 +7,7 @@ import type { Database } from '@/types/supabase'
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const supabase = createServerComponentClient<Database>({ cookies })
+  const supabase = await createClient()
 
   const { data, error } = await supabase
     .from("documents")

@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { SupabaseClient, User } from '@supabase/supabase-js'
 import type { Database } from '@/types/supabase'
-import { supabaseClient } from '@/lib/supabase/client-singleton'
+import { supabaseClient } from '@/lib/supabase/browser'
 
 type SupabaseContext = {
   supabase: SupabaseClient<Database>

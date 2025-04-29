@@ -1,11 +1,11 @@
 'use server'
 
 import { cookies } from 'next/headers'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/lib/supabase/server'
 import type { Database } from '@/types/supabase'
 
 export async function getDocuments() {
-  const supabase = createServerComponentClient<Database>({ cookies })
+  const supabase = await createClient()
   
   const { data, error } = await supabase
     .from("documents")

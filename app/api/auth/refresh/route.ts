@@ -1,4 +1,4 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
 import { type NextRequest, NextResponse } from 'next/server'
 
@@ -6,7 +6,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
-  const supabase = createRouteHandlerClient({ cookies })
+  const supabase = await createClient()
 
   // Get the refresh token from the request
   const { refresh_token } = await req.json()

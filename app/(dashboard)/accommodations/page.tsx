@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,7 @@ import type { Database } from '@/types/supabase';
 export const dynamic = 'force-dynamic';
 
 const AccommodationsPage = async () => {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = await createClient();
   
   // Define types for organization data
   type UserOrg = {

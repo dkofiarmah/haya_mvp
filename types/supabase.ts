@@ -440,6 +440,55 @@ export type Database = {
           }
         ]
       }
+      documents: {
+        Row: {
+          id: string
+          org_id: string
+          name: string
+          file_type: string
+          file_size: number
+          description: string | null
+          status: 'processing' | 'ready' | 'error'
+          content_path: string
+          meta_data: Json | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          org_id: string
+          name: string
+          file_type: string
+          file_size: number
+          description?: string | null
+          status?: 'processing' | 'ready' | 'error'
+          content_path: string
+          meta_data?: Json | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          org_id?: string
+          name?: string
+          file_type?: string
+          file_size?: number
+          description?: string | null
+          status?: 'processing' | 'ready' | 'error'
+          content_path?: string
+          meta_data?: Json | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documents_org_id_fkey"
+            columns: ["org_id"]
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       experiences: {
         Row: {
           id: string

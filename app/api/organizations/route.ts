@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import type { Database } from '@/types/supabase';
 
@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export async function POST(request: Request) {
   try {
     // Create a Supabase client for route handlers (API routes)
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = await createClient();
     
     const { name, contactEmail, userId } = await request.json();
     

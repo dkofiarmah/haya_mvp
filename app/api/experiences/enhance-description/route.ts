@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createClient } from '@/lib/supabase/server'
 
 /**
  * API route for enhancing experience descriptions with AI
@@ -17,7 +16,7 @@ export async function POST(request: Request) {
     }
     
     // Create Supabase client
-    const supabase = createRouteHandlerClient({ cookies })
+    const supabase = await createClient()
     
     // Check authentication
     const { data: { user }, error: authError } = await supabase.auth.getUser()

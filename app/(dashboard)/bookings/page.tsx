@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { PlusCircle, Filter, Search } from 'lucide-react'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
 import type { Database } from '@/types/supabase'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
@@ -45,7 +45,7 @@ const getStatusBadgeColor = (status: string) => {
 };
 
 async function BookingsTable() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = await createClient();
   
   // Get user's organizations - no param needed, uses auth.uid() by default
   const { data: orgs } = await supabase.rpc('get_user_organizations');
