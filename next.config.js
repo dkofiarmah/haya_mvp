@@ -30,7 +30,7 @@ const nextConfig = {
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
-        punycode: false,
+        punycode: require.resolve('punycode.js'),
         canvas: false,
         'canvas-prebuilt': false,
         // Additional fallbacks for Node modules

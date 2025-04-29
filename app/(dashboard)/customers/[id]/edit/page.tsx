@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CustomerForm } from '@/components/customer-form'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
-import { supabase } from '@/lib/supabase/client'
+import { supabaseClient } from '@/lib/supabase/browser'
 import { useToast } from '@/components/ui/use-toast'
 
 export default function EditCustomerPage({ params }: { params: { id: string } }) {
@@ -19,7 +19,7 @@ export default function EditCustomerPage({ params }: { params: { id: string } })
   useEffect(() => {
     const fetchCustomer = async () => {
       try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
           .from('customers')
           .select('*')
           .eq('id', params.id)

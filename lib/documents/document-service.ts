@@ -1,7 +1,7 @@
 'use server'
 
 import { cache } from 'react'
-import { createServerClient } from "@/app/supabase-server"
+import { createClient } from '@/lib/supabase/server'
 
 async function getDocumentsImpl() {
   const supabase = await createServerClient()
@@ -18,7 +18,7 @@ async function getDocumentsImpl() {
 export const getDocuments = cache(getDocumentsImpl)
 
 async function getDocumentImpl(id: string) {
-  const supabase = await createServerClient()
+  const supabase = await createClient()
   const { data, error } = await supabase.from("documents").select("*").eq("id", id).single()
 
   if (error) {

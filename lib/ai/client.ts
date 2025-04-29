@@ -1,11 +1,11 @@
+'use client'
+
 import { supabaseClient } from '@/lib/supabase/browser'
+import type { Database } from '@/types/supabase'
 
-// Create a single instance of the client
-const aiServiceClient = supabaseClient
-
-// Fetch all AI assistants
+// Client-side AI service functions
 export async function getAIAssistants() {
-  const { data, error } = await aiServiceClient
+  const { data, error } = await supabaseClient
     .from('ai_assistants')
     .select('*')
     .order('created_at', { ascending: false })
@@ -15,13 +15,11 @@ export async function getAIAssistants() {
     throw error
   }
 
-  // Ensure the data is serializable for Next.js by creating a plain JSON object
-  return data ? JSON.parse(JSON.stringify(data)) : []
+  return data
 }
 
-// Fetch a single AI assistant by ID
 export async function getAIAssistant(id: string) {
-  const { data, error } = await aiServiceClient
+  const { data, error } = await supabaseClient
     .from('ai_assistants')
     .select('*')
     .eq('id', id)
@@ -32,60 +30,12 @@ export async function getAIAssistant(id: string) {
     throw error
   }
 
-  // Ensure the data is serializable for Next.js
-  return data ? JSON.parse(JSON.stringify(data)) : null
-}
-
-// Create a new AI assistant
-export async function createAIAssistant(assistantData: any) {
-  const { data, error } = await aiServiceClient
-    .from('ai_assistants')
-    .insert([assistantData])
-    .select()
-    .single()
-
-  if (error) {
-    console.error("Error creating AI assistant:", error)
-    throw error
-  }
-
   return data
 }
 
-// Update an existing AI assistant
-export async function updateAIAssistant(id: string, assistantData: any) {
-  const { data, error } = await aiServiceClient
-    .from('ai_assistants')
-    .update(assistantData)
-    .eq('id', id)
-    .select()
-    .single()
-
-  if (error) {
-    console.error("Error updating AI assistant:", error)
-    throw error
-  }
-
-  return data
-}
-
-// Delete an AI assistant
-export async function deleteAIAssistant(id: string) {
-  const { error } = await aiServiceClient
-    .from('ai_assistants')
-    .delete()
-    .eq('id', id)
-
-  if (error) {
-    console.error("Error deleting AI assistant:", error)
-    throw error
-  }
-}
-
-// Generate a response from an AI assistant
 export async function generateAIResponse(assistantId: string, message: string, conversationId?: string | null) {
   // First get the assistant to check its configuration
-  const { data: assistant, error: assistantError } = await aiServiceClient
+  const { data: assistant, error: assistantError } = await supabaseClient
     .from('ai_assistants')
     .select('*')
     .eq('id', assistantId)
@@ -106,7 +56,7 @@ export async function generateAIResponse(assistantId: string, message: string, c
 
   let conversation
   if (conversationId) {
-    const { data, error } = await aiServiceClient
+    const { data, error } = await supabaseClient
       .from('conversations')
       .update(conversationData)
       .eq('id', conversationId)
@@ -116,7 +66,7 @@ export async function generateAIResponse(assistantId: string, message: string, c
     if (error) throw error
     conversation = data
   } else {
-    const { data, error } = await aiServiceClient
+    const { data, error } = await supabaseClient
       .from('conversations')
       .insert([conversationData])
       .select()
@@ -127,7 +77,7 @@ export async function generateAIResponse(assistantId: string, message: string, c
   }
 
   // Store the message
-  const { error: messageError } = await aiServiceClient
+  const { error: messageError } = await supabaseClient
     .from('messages')
     .insert([{
       conversation_id: conversation.id,
@@ -147,7 +97,7 @@ export async function generateAIResponse(assistantId: string, message: string, c
   }
 
   // Store the AI response
-  const { error: responseError } = await aiServiceClient
+  const { error: responseError } = await supabaseClient
     .from('messages')
     .insert([{
       conversation_id: conversation.id,
@@ -158,7 +108,7 @@ export async function generateAIResponse(assistantId: string, message: string, c
   if (responseError) throw responseError
 
   // Update conversation with the response
-  const { error: updateError } = await aiServiceClient
+  const { error: updateError } = await supabaseClient
     .from('conversations')
     .update({
       last_response: response.message,

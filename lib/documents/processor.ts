@@ -1,11 +1,11 @@
-import { createServerClient } from "@/lib/supabase/server"
+import { createClient } from '@/lib/supabase/server'
 
 /**
  * Process a document after it has been uploaded
  * This function extracts text from the document and creates chunks
  */
 export async function processDocument(documentId: string, filePath: string, fileType: string): Promise<void> {
-  const supabase = createServerClient()
+  const supabase = await createClient()
 
   try {
     // Update document status to processing

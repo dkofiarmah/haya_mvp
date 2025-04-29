@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
 import { ArrowLeft, Edit, Trash2 } from 'lucide-react'
-import { supabase } from '@/lib/supabase/client'
+import { supabaseClient } from '@/lib/supabase/browser'
 import { useToast } from '@/components/ui/use-toast'
 import {
   AlertDialog,
@@ -30,7 +30,7 @@ export default function CustomerDetailsPage({ params }: { params: { id: string }
   useEffect(() => {
     const fetchCustomer = async () => {
       try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
           .from('customers')
           .select('*')
           .eq('id', params.id)

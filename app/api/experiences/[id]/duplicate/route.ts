@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerClient } from '@/lib/supabase/server-client'
+import { createClient } from '@/lib/supabase/server'
 import { logExperienceAction } from '@/app/actions/experience-audit'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -9,7 +9,7 @@ export async function POST(
 ) {
   try {
     const { id } = params
-    const supabase = await createServerClient()
+    const supabase = await createClient()
     
     // Get the experience to duplicate
     const { data: experience, error: fetchError } = await supabase

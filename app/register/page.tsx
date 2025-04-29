@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { CheckCircle, AlertCircle, Loader2 } from "lucide-react"
-import { supabaseClient } from "@/lib/supabase/client-singleton"
+import { supabaseClient } from "@/lib/supabase/browser"
 
 // Component to wrap the registration form
 function RegisterForm() {

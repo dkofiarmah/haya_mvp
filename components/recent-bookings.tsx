@@ -5,8 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Calendar, ArrowRight } from "lucide-react"
-// Import the singleton client instead
-import { getSupabaseClient } from '@/lib/supabase/global-client'
+import { supabaseClient } from '@/lib/supabase/browser'
 import type { Database } from '@/types/supabase'
 import Link from "next/link"
 
@@ -40,9 +39,8 @@ export function RecentBookings() {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        setLoading(true)
-        // Use the global singleton client
-        const supabase = getSupabaseClient()
+        setLoading(true)      // Use the browser client
+      const supabase = supabaseClient
         
         // First check if the bookings table exists
         const { error: tableError } = await supabase

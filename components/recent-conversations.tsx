@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { MessageSquare, ArrowRight, Bot, User } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { getSupabaseClient } from '@/lib/supabase/global-client'
+import { supabaseClient } from '@/lib/supabase/browser'
 import type { Database } from '@/types/supabase'
 import Link from "next/link"
 import type { Conversation } from "@/types/conversations"
@@ -21,7 +21,7 @@ export function RecentConversations() {
       try {
         setLoading(true)
         setError(null)
-        const supabase = getSupabaseClient()
+        const supabase = supabaseClient
         
         const { data, error } = await supabase
           .from("conversations")
