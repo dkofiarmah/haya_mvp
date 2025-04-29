@@ -65,7 +65,8 @@ ehthumbs.db
 Thumbs.db
 
 # Local scripts
-#*.sh
+# Uncommented to allow shell scripts for build process
+# *.sh
 
 # Temporary files
 *.tmp
