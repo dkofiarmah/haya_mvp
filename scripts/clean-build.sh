@@ -9,6 +9,10 @@ echo "Cleaning Next.js cache and build directories..."
 rm -rf .next
 rm -rf .vercel/output
 
+# Ensure uuid package is properly installed
+echo "Ensuring dependencies are properly installed..."
+npm list uuid || npm install uuid @types/uuid
+
 # Run the vercel-build script from package.json which already handles canvas cleanup and build
 echo "Running vercel-build script..."
 npm run vercel-build
