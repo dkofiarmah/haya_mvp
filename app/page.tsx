@@ -185,7 +185,12 @@ export default function HomePage() {
               </div>
               
               <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight mb-6 text-balance leading-tight sm:leading-tight lg:leading-tight font-display">
-                Turn <span className="text-primary">Tour Chaos</span> Into <span className="text-primary">Business Magic</span>
+                <div className="typewriter-container">
+                  <div className="typewriter-text">
+                    Turn <span className="text-primary">Tour Chaos</span> Into <span className="text-primary">Business Magic</span>
+                    <span className="typewriter-cursor" aria-hidden="true"></span>
+                  </div>
+                </div>
                 <span className="block text-muted-foreground font-normal text-xl sm:text-2xl mt-6 font-sans">The Digital Assistant Every Tour Operator Has Been Waiting For</span>
               </h1>
             </div>

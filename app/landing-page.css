@@ -2,6 +2,7 @@
 :root {
   --primary-color: #4f46e5; /* Indigo 600 - Matches the primary color */
   --primary-rgb: 79, 70, 229; /* RGB values for the primary color */
+  --typewriter-duration: 3s; /* Duration for typewriter animation */
 }
 
 @keyframes fadeIn {
@@ -58,6 +59,16 @@
   to { transform: rotate(360deg); }
 }
 
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  from { border-right-color: rgba(var(--primary-rgb), 0.75); }
+  to { border-right-color: transparent; }
+}
+
 .animate-fade-in {
   animation: fadeIn 1s ease-out forwards;
 }
@@ -98,6 +109,37 @@
 
 .animate-breathe {
   animation: breathe 3s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.typewriter-container {
+  display: inline-block;
+  width: 100%;
+}
+
+.typewriter-text {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typewriter var(--typewriter-duration) steps(40, end) 0.5s 1 normal both;
+}
+
+.typewriter-text-primary {
+  display: inline;
+}
+
+.typewriter-text-container {
+  position: relative;
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: currentColor;
+  margin-left: 2px;
+  opacity: 0;
+  animation: blink 0.7s steps(1) infinite;
+  animation-delay: var(--typewriter-duration);
 }
 
 .animate-rotate {
