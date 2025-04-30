@@ -8,17 +8,17 @@ import { Metadata } from "next"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { NavigationProgress } from "@/components/navigation-progress"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
 export const metadata: Metadata = {
-  title: "Haya",
-  description: "Haya Travel Platform",
+  title: "Haya | AI-Powered Tour Operator Platform", // Improved SEO Title
+  description: "Haya: The intelligent platform for modern tour operators. Automate tasks, enhance client communication, and grow your business with our Digital Assistant.", // Improved SEO Description
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${inter.variable} font-sans`}>
         <ThemeProvider attribute="class" defaultTheme="light">
           <SupabaseProvider>
             <SupabaseAuthProvider>
