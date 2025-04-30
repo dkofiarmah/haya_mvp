@@ -179,10 +179,7 @@ export default function HomePage() {
           
           <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center px-4 py-1.5 mb-8 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20 animate-pulse">
-                <Sparkles className="mr-2 h-4 w-4" />
-                <span>AI-powered tour management reimagined</span>
-              </div>
+              
               
               <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight mb-6 text-balance leading-tight sm:leading-tight lg:leading-tight font-display">
                 <div className="typewriter-container">
