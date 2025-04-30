@@ -50,7 +50,7 @@ export default function HomePage() {
       
       {/* Navigation Header */}
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2 group" aria-label="Haya Home">
@@ -177,18 +177,20 @@ export default function HomePage() {
              </div>
           </div>
           
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <div className="inline-flex items-center justify-center px-4 py-1.5 mb-8 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20 animate-pulse">
-              <Sparkles className="mr-2 h-4 w-4" />
-              <span>AI-powered tour management reimagined</span>
+          <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center px-4 py-1.5 mb-8 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20 animate-pulse">
+                <Sparkles className="mr-2 h-4 w-4" />
+                <span>AI-powered tour management reimagined</span>
+              </div>
+              
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight mb-6 text-balance leading-tight sm:leading-tight lg:leading-tight font-display">
+                Turn <span className="text-primary">Tour Chaos</span> Into <span className="text-primary">Business Magic</span>
+                <span className="block text-muted-foreground font-normal text-xl sm:text-2xl mt-6 font-sans">The Digital Assistant Every Tour Operator Has Been Waiting For</span>
+              </h1>
             </div>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight mb-6 text-balance leading-tight sm:leading-tight lg:leading-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70 font-display">
-              Turn <span className="text-primary">Tour Chaos</span> Into <span className="text-primary">Business Magic</span>
-              <span className="block text-muted-foreground font-normal text-xl sm:text-2xl mt-6 font-sans">The Digital Assistant Every Tour Operator Has Been Waiting For</span>
-            </h1>
-            
-            <p className="text-lg sm:text-xl text-muted-foreground/90 mb-12 max-w-3xl mx-auto text-balance leading-relaxed">
+            <p className="text-lg sm:text-xl text-muted-foreground/90 mb-16 max-w-[58rem] mx-auto text-balance leading-relaxed text-center">
               Haya combines AI intelligence with powerful automation to eliminate administrative overload. 
               Manage bookings, generate itineraries, and respond to clients — all from one intelligent platform.
             </p>
@@ -231,15 +233,15 @@ export default function HomePage() {
         <section 
           id="features" 
           ref={featuresRef}
-          className={`py-10 sm:py-12 bg-gradient-to-b from-background to-secondary/5 transition-opacity duration-1000 ease-out ${featuresVisible ? "opacity-100" : "opacity-0 translate-y-4"}`}
+          className={`py-10 sm:py-12 bg-secondary/5 transition-opacity duration-1000 ease-out ${featuresVisible ? "opacity-100" : "opacity-0 translate-y-4"}`}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto text-center mb-10">
+          <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-[52rem] mx-auto text-center mb-10">
               <div className="inline-flex items-center justify-center px-4 py-1.5 mb-4 rounded-full text-sm font-medium bg-secondary/30 text-muted-foreground border border-border/30">
                 <Bot className="mr-2 h-4 w-4" />
                 <span>AI-Powered Features</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4 text-balance bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground to-foreground/80 font-display">Transform Your Tour Operations</h2>
+              <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4 text-balance font-display">Transform Your Tour Operations</h2>
               <p className="text-lg text-muted-foreground/90 text-balance max-w-2xl mx-auto">Powerful automation that handles the tedious work while you focus on creating unforgettable experiences for your clients.</p>
             </div>
             
@@ -296,10 +298,132 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Feature Comparison Table */}
+        <section className="py-16 sm:py-15 bg-background relative overflow-hidden">
+          <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Decorative elements */}
+            <div className="absolute inset-0 pointer-events-none opacity-10 z-0">
+              <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-primary/5 rounded-full filter blur-3xl"></div>
+              <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-primary/5 rounded-full filter blur-3xl"></div>
+            </div>
+
+            <div className="max-w-[52rem] mx-auto text-center mb-12">
+              <div className="inline-flex items-center justify-center px-4 py-1.5 mb-5 rounded-full text-sm font-medium bg-secondary/30 text-muted-foreground border border-border/30">
+                <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Why Choose Haya</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-5 text-balance font-display">Elevate Your Operations</h2>
+              <p className="text-lg text-muted-foreground/90 text-balance max-w-2xl mx-auto">The modern approach to tour management</p>
+            </div>
+            
+            {/* Comparison Header */}
+            <div className="grid grid-cols-3 mb-6 max-w-5xl mx-auto">
+              <div className="col-span-1"></div>
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center px-4 py-2 bg-primary/10 text-primary rounded-full font-medium">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  Haya
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center px-4 py-2 bg-card text-muted-foreground rounded-full font-medium">
+                  Traditional Approach
+                </div>
+              </div>
+            </div>
+            
+            {/* Comparison Rows */}
+            <div className="space-y-6 max-w-5xl mx-auto">
+              {[
+                {
+                  feature: "Itinerary Creation",
+                  haya: "AI generates complete itineraries in seconds",
+                  traditional: "Hours of manual work for each client",
+                  icon: (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                  )
+                },
+                {
+                  feature: "Client Communication",
+                  haya: "Unified inbox with AI-assisted responses",
+                  traditional: "Multiple platforms and manual responses",
+                  icon: (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
+                  )
+                },
+                {
+                  feature: "Booking Management",
+                  haya: "Automated tracking and notifications",
+                  traditional: "Spreadsheets and manual follow-ups",
+                  icon: (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  )
+                },
+                {
+                  feature: "Payment Processing",
+                  haya: "Integrated secure payments, automatic reminders",
+                  traditional: "Separate systems and manual tracking",
+                  icon: (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                    </svg>
+                  )
+                }
+              ].map((row, index) => (
+                <div key={index} className="grid grid-cols-3 bg-card rounded-xl border border-border/30 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+                  {/* Feature column */}
+                  <div className="p-5 flex items-center gap-4 border-r border-border/20">
+                    <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                      {row.icon}
+                    </div>
+                    <h3 className="font-medium text-lg">{row.feature}</h3>
+                  </div>
+                  
+                  {/* Haya column */}
+                  <div className="p-5 bg-primary/5 flex items-center">
+                    <div className="flex items-start">
+                      <div className="h-6 w-6 rounded-full bg-primary/10 text-primary mr-3 flex-shrink-0 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <p className="text-foreground">{row.haya}</p>
+                    </div>
+                  </div>
+                  
+                  {/* Traditional column */}
+                  <div className="p-5 bg-card/30 flex items-center">
+                    <div className="flex items-start">
+                      <div className="h-6 w-6 rounded-full bg-red-500/10 text-red-500 mr-3 flex-shrink-0 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <p className="text-muted-foreground">{row.traditional}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Additional comparative advantage */}
+          </div>
+        </section>
+
         {/* Client Results Section */}
-        <section className="py-10 sm:py-14 bg-gradient-to-b from-secondary/5 to-background relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="max-w-3xl mx-auto text-center mb-10">
+        <section className="py-10 sm:py-14 bg-background relative overflow-hidden">
+          <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="max-w-[52rem] mx-auto text-center mb-10">
               <div className="inline-flex items-center justify-center px-4 py-1.5 mb-4 rounded-full text-sm font-medium bg-secondary/30 text-muted-foreground border border-border/30">
                 <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -335,28 +459,76 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            
-            <div className="mt-16 bg-gradient-to-r from-secondary/20 via-background to-secondary/20 rounded-xl p-8 border border-border/30">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                <div className="text-left">
-                  <h3 className="font-semibold text-2xl mb-2">ROI Calculator</h3>
-                  <p className="text-muted-foreground">Estimate your cost savings and revenue growth with Haya</p>
-                </div>
-                <Link href="/roi-calculator" aria-label="Calculate your potential ROI">
-                  <Button className="rounded-lg px-6 py-2 bg-primary text-primary-foreground hover:bg-primary/90">
-                    Calculate Your ROI
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
+        
           </div>
         </section>
 
-        {/* FAQ Section */}
+        {/* Adding Testimonial Section */}
+        <section id="testimonials" className="py-10 sm:py-14 bg-secondary/5 relative overflow-hidden">
+          <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="max-w-[52rem] mx-auto text-center mb-10">
+              <div className="inline-flex items-center justify-center px-4 py-1.5 mb-4 rounded-full text-sm font-medium bg-secondary/30 text-muted-foreground border border-border/30">
+                <MessageCircle className="mr-2 h-4 w-4" />
+                <span>Success Stories</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4 text-balance font-display">From Overwhelmed to Thriving</h2>
+              <p className="text-lg text-muted-foreground/90 text-balance">Hear from tour operators who transformed their businesses with Haya</p>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {[
+                {
+                  quote: "Before Haya, I was spending 70% of my time on admin. Now it's down to 20%, and our bookings have increased by 40% because I can focus on creating amazing experiences.",
+                  author: "Sarah Omondi",
+                  role: "Founder, Kenya Safari Experiences",
+                  image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80"
+                },
+                {
+                  quote: "The AI itinerary generator alone is worth every penny. What used to take hours now takes minutes, and clients are amazed by how personalized everything feels.",
+                  author: "Michael Cheruiyot",
+                  role: "CEO, Adventure East Africa",
+                  image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80"
+                },
+                {
+                  quote: "Our response time went from 24 hours to under 1 hour. Haya's AI handles 80% of common questions, and clients love how quickly they get answers.",
+                  author: "Amina Hassan",
+                  role: "Operations Director, Coastal Tours",
+                  image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80"
+                }
+              ].map((testimonial, index) => (
+                <div key={index} className="bg-card p-8 rounded-xl border border-border/20 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full">
+                  <div className="mb-6 text-primary">
+                    {[...Array(5)].map((_, i) => (
+                      <span key={i} className="text-lg">★</span>
+                    ))}
+                  </div>
+                  <blockquote className="text-foreground/90 text-lg italic mb-6 flex-grow">"{testimonial.quote}"</blockquote>
+                  <div className="flex items-center mt-auto">
+                    <div className="h-12 w-12 rounded-full overflow-hidden mr-4 border-2 border-primary/20">
+                      <Image 
+                        src={testimonial.image} 
+                        alt={testimonial.author} 
+                        width={48} 
+                        height={48}
+                        className="object-cover h-full w-full"
+                      />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-foreground">{testimonial.author}</div>
+                      <div className="text-sm text-muted-foreground">{testimonial.role}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+          </div>
+        </section>
+        
+         {/* FAQ Section */}
         <section id="faq" className="py-10 sm:py-14 bg-background relative overflow-hidden">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="max-w-3xl mx-auto text-center mb-10">
+          <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="max-w-[52rem] mx-auto text-center mb-10">
               <div className="inline-flex items-center justify-center px-4 py-1.5 mb-4 rounded-full text-sm font-medium bg-secondary/30 text-muted-foreground border border-border/30">
                 <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -422,263 +594,13 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-
-        {/* Adding Testimonial Section */}
-        <section id="testimonials" className="py-10 sm:py-14 bg-gradient-to-b from-secondary/5 to-background relative overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none opacity-10 z-0">
-            <div className="absolute top-1/3 right-1/3 w-64 h-64 bg-primary/10 rounded-full filter blur-3xl"></div>
-            <div className="absolute bottom-1/3 left-1/3 w-64 h-64 bg-primary/10 rounded-full filter blur-3xl"></div>
-          </div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="max-w-3xl mx-auto text-center mb-10">
-              <div className="inline-flex items-center justify-center px-4 py-1.5 mb-4 rounded-full text-sm font-medium bg-secondary/30 text-muted-foreground border border-border/30">
-                <MessageCircle className="mr-2 h-4 w-4" />
-                <span>Success Stories</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4 text-balance font-display">From Overwhelmed to Thriving</h2>
-              <p className="text-lg text-muted-foreground/90 text-balance">Hear from tour operators who transformed their businesses with Haya</p>
-            </div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  quote: "Before Haya, I was spending 70% of my time on admin. Now it's down to 20%, and our bookings have increased by 40% because I can focus on creating amazing experiences.",
-                  author: "Sarah Omondi",
-                  role: "Founder, Kenya Safari Experiences",
-                  image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80"
-                },
-                {
-                  quote: "The AI itinerary generator alone is worth every penny. What used to take hours now takes minutes, and clients are amazed by how personalized everything feels.",
-                  author: "Michael Cheruiyot",
-                  role: "CEO, Adventure East Africa",
-                  image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80"
-                },
-                {
-                  quote: "Our response time went from 24 hours to under 1 hour. Haya's AI handles 80% of common questions, and clients love how quickly they get answers.",
-                  author: "Amina Hassan",
-                  role: "Operations Director, Coastal Tours",
-                  image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80"
-                }
-              ].map((testimonial, index) => (
-                <div key={index} className="bg-card p-8 rounded-xl border border-border/20 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full">
-                  <div className="mb-6 text-primary">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className="text-lg">★</span>
-                    ))}
-                  </div>
-                  <blockquote className="text-foreground/90 text-lg italic mb-6 flex-grow">"{testimonial.quote}"</blockquote>
-                  <div className="flex items-center mt-auto">
-                    <div className="h-12 w-12 rounded-full overflow-hidden mr-4 border-2 border-primary/20">
-                      <Image 
-                        src={testimonial.image} 
-                        alt={testimonial.author} 
-                        width={48} 
-                        height={48}
-                        className="object-cover h-full w-full"
-                      />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-foreground">{testimonial.author}</div>
-                      <div className="text-sm text-muted-foreground">{testimonial.role}</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-          </div>
-        </section>
         
-
-        {/* Feature Comparison Table */}
-        <section className="py-16 sm:py-15 bg-background relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            {/* Decorative elements */}
-            <div className="absolute inset-0 pointer-events-none opacity-10 z-0">
-              <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-primary/5 rounded-full filter blur-3xl"></div>
-              <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-primary/5 rounded-full filter blur-3xl"></div>
-            </div>
-
-            <div className="max-w-3xl mx-auto text-center mb-12">
-              <div className="inline-flex items-center justify-center px-4 py-1.5 mb-5 rounded-full text-sm font-medium bg-secondary/30 text-muted-foreground border border-border/30">
-                <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span>Why Choose Haya</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-5 text-balance font-display">Elevate Your Operations</h2>
-              <p className="text-lg text-muted-foreground/90 text-balance max-w-2xl mx-auto">The modern approach to tour management</p>
-            </div>
-            
-            {/* Comparison Header */}
-            <div className="grid grid-cols-3 mb-6 max-w-4xl mx-auto">
-              <div className="col-span-1"></div>
-              <div className="text-center">
-                <div className="inline-flex items-center justify-center px-4 py-2 bg-primary/10 text-primary rounded-full font-medium">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Haya
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="inline-flex items-center justify-center px-4 py-2 bg-card text-muted-foreground rounded-full font-medium">
-                  Traditional Approach
-                </div>
-              </div>
-            </div>
-            
-            {/* Comparison Rows */}
-            <div className="space-y-6 max-w-4xl mx-auto">
-              {[
-                {
-                  feature: "Itinerary Creation",
-                  haya: "AI generates complete itineraries in seconds",
-                  traditional: "Hours of manual work for each client",
-                  icon: (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    </svg>
-                  )
-                },
-                {
-                  feature: "Client Communication",
-                  haya: "Unified inbox with AI-assisted responses",
-                  traditional: "Multiple platforms and manual responses",
-                  icon: (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                    </svg>
-                  )
-                },
-                {
-                  feature: "Booking Management",
-                  haya: "Automated tracking and notifications",
-                  traditional: "Spreadsheets and manual follow-ups",
-                  icon: (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  )
-                },
-                {
-                  feature: "Payment Processing",
-                  haya: "Integrated secure payments, automatic reminders",
-                  traditional: "Separate systems and manual tracking",
-                  icon: (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                    </svg>
-                  )
-                }
-              ].map((row, index) => (
-                <div key={index} className="grid grid-cols-3 bg-gradient-to-r from-background to-secondary/5 rounded-xl border border-border/30 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
-                  {/* Feature column */}
-                  <div className="p-5 flex items-center gap-4 border-r border-border/20">
-                    <div className="p-2 rounded-lg bg-primary/10 text-primary">
-                      {row.icon}
-                    </div>
-                    <h3 className="font-medium text-lg">{row.feature}</h3>
-                  </div>
-                  
-                  {/* Haya column */}
-                  <div className="p-5 bg-primary/5 flex items-center">
-                    <div className="flex items-start">
-                      <div className="h-6 w-6 rounded-full bg-primary/10 text-primary mr-3 flex-shrink-0 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <p className="text-foreground">{row.haya}</p>
-                    </div>
-                  </div>
-                  
-                  {/* Traditional column */}
-                  <div className="p-5 bg-card/30 flex items-center">
-                    <div className="flex items-start">
-                      <div className="h-6 w-6 rounded-full bg-red-500/10 text-red-500 mr-3 flex-shrink-0 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <p className="text-muted-foreground">{row.traditional}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            {/* Additional comparative advantage */}
-          </div>
-        </section>
-         {/* Call to Action Section */}
-        <section 
-          ref={ctaRef}
-          className={`py-10 sm:py-14 bg-gradient-to-t from-background to-secondary/5 relative overflow-hidden transition-opacity duration-1000 ease-out ${ctaVisible ? "opacity-100" : "opacity-0 translate-y-4"}`}
-        >
-           {/* Subtle Background Pulse */}
-          <div className="absolute inset-0 pointer-events-none opacity-15 z-0">
-            <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/5 rounded-full filter blur-3xl animate-pulse" style={{animationDuration: '9s'}}></div>
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full filter blur-3xl animate-pulse" style={{animationDuration: '12s', animationDelay: '2s'}}></div>
-          </div>
-
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div className="inline-flex items-center justify-center px-4 py-1.5 mb-4 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20">
-              <Zap className="mr-2 h-4 w-4" />
-              <span>Limited Time Offer</span>
-            </div>
-            
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4 text-balance font-display">Ready to Reclaim <span className="text-primary">15+ Hours</span> Every Week?</h2>
-            
-            <p className="text-lg text-muted-foreground mb-8 text-balance max-w-2xl mx-auto leading-relaxed">
-              Join the growing community of tour operators who've transformed their businesses. 
-              Start your 14-day free trial today.
-            </p>
-            
-            <div className="bg-card border border-border/30 rounded-xl p-6 sm:p-8 shadow-md max-w-3xl mx-auto mb-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left mb-6">
-                {[
-                  { title: "AI Itinerary Generator", description: "Create personalized trips in seconds" },
-                  { title: "Unified Client Communication", description: "One inbox for all channels" },
-                  { title: "Complete Booking Management", description: "From inquiry to payment" }
-                ].map((feature, i) => (
-                  <div key={i} className="flex items-start">
-                    <div className="flex-shrink-0 h-5 w-5 rounded-full bg-green-500 mt-0.5 mr-2 flex items-center justify-center text-white">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3">
-                        <path fillRule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clipRule="evenodd" />
-                    </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-foreground text-sm">{feature.title}</h4>
-                      <p className="text-xs text-muted-foreground">{feature.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="flex flex-col sm:flex-row items-center gap-3 justify-center">
-                <Link href="/register" aria-label="Sign up for a free trial" className="w-full sm:w-auto">
-                  <Button className="rounded-full px-6 py-2 shadow-md hover:shadow-primary/20 transition-shadow duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full">
-                    Start Your Free Trial
-                    <Zap className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-                
-                <p className="text-xs text-muted-foreground">No credit card required</p>
-              </div>
-            </div>
-            
-            <div className="text-sm text-muted-foreground/70">
-              <p>Have questions? <Link href="/contact" className="text-primary underline hover:no-underline">Talk to our team</Link> or check out our <Link href="/faq" className="text-primary underline hover:no-underline">FAQ</Link></p>
-            </div>
-          </div>
-        </section>
+    
       </main>
 
       {/* Simplified Footer for MVP */}
-      <footer className="bg-card/50 border-t border-border/20 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className="bg-card py-8 border-t border-border/20">
+        <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center space-x-3">
               <Image 
