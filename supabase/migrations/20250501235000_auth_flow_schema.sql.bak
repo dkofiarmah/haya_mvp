@@ -1,0 +1,200 @@
+-- Auth Flow Schema for Multi-tenant B2B SaaS App
+-- Extends existing schema with improvements for a streamlined registration and onboarding process
+
+-- Ensure organizations table has a slug field for URL-friendly organization identifiers
+ALTER TABLE IF EXISTS organizations 
+ADD COLUMN IF NOT EXISTS slug TEXT UNIQUE;
+
+-- Ensure an index on the slug for faster lookups
+CREATE INDEX IF NOT EXISTS idx_organizations_slug ON organizations(slug);
+
+-- Add fields for email verification tracking
+ALTER TABLE IF EXISTS user_profiles 
+ADD COLUMN IF NOT EXISTS email_verified BOOLEAN DEFAULT FALSE,
+ADD COLUMN IF NOT EXISTS email_verification_sent_at TIMESTAMP WITH TIME ZONE;
+
+-- Add onboarding tracking fields to user_profiles to track progress
+ALTER TABLE IF EXISTS user_profiles 
+ADD COLUMN IF NOT EXISTS onboarding_step INTEGER DEFAULT 1,
+ADD COLUMN IF NOT EXISTS onboarding_started BOOLEAN DEFAULT FALSE,
+ADD COLUMN IF NOT EXISTS onboarding_skipped BOOLEAN DEFAULT FALSE;
+
+-- Create email verification tokens table for custom verification flow
+CREATE TABLE IF NOT EXISTS email_verification_tokens (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  token TEXT NOT NULL UNIQUE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+  used_at TIMESTAMP WITH TIME ZONE,
+  UNIQUE(user_id, token)
+);
+
+-- Create invitations table for team member invitations
+CREATE TABLE IF NOT EXISTS invitations (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  email TEXT NOT NULL,
+  role TEXT NOT NULL CHECK (role IN ('admin', 'member')),
+  token TEXT NOT NULL UNIQUE,
+  invited_by UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+  accepted_at TIMESTAMP WITH TIME ZONE,
+  UNIQUE(organization_id, email)
+);
+
+-- Create a function to auto-generate slugs for organizations
+CREATE OR REPLACE FUNCTION generate_organization_slug()
+RETURNS TRIGGER AS $$
+DECLARE
+  base_slug TEXT;
+  new_slug TEXT;
+  counter INTEGER := 1;
+BEGIN
+  -- Convert name to lowercase and replace spaces and special chars with hyphens
+  base_slug := regexp_replace(
+    regexp_replace(lower(NEW.name), '[^a-z0-9]', '-', 'g'),
+    '-+', '-', 'g'
+  );
+  
+  -- Trim hyphens from beginning and end
+  base_slug := trim(both '-' from base_slug);
+  
+  -- Add timestamp to ensure uniqueness
+  base_slug := base_slug || '-' || to_char(NOW(), 'YYYYMMDDHH24MISS');
+  
+  NEW.slug := base_slug;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create trigger for generating slugs
+CREATE TRIGGER before_insert_organizations
+  BEFORE INSERT ON organizations
+  FOR EACH ROW
+  WHEN (NEW.slug IS NULL)
+  EXECUTE FUNCTION generate_organization_slug();
+
+-- Function to check if a user belongs to an organization
+CREATE OR REPLACE FUNCTION user_belongs_to_organization(user_id UUID, org_id UUID)
+RETURNS BOOLEAN AS $$
+BEGIN
+  RETURN EXISTS (
+    SELECT 1 FROM organization_users
+    WHERE user_id = $1 AND organization_id = $2
+  );
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Function to make a user complete onboarding
+CREATE OR REPLACE FUNCTION complete_user_onboarding(p_user_id UUID)
+RETURNS VOID AS $$
+BEGIN
+  UPDATE user_profiles
+  SET 
+    onboarding_completed = TRUE,
+    onboarding_started = TRUE,
+    onboarding_step = 5, -- Assuming 5 steps in onboarding
+    updated_at = NOW()
+  WHERE id = p_user_id;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- RLS policies for new tables
+
+-- Email verification tokens
+ALTER TABLE email_verification_tokens ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can view their own email verification tokens"
+  ON email_verification_tokens FOR SELECT
+  USING (auth.uid() = user_id);
+
+-- Only service role can insert/update verification tokens
+CREATE POLICY "Service role can manage email verification tokens"
+  ON email_verification_tokens FOR ALL
+  USING (auth.jwt() ->> 'role' = 'service_role');
+
+-- Invitations
+ALTER TABLE invitations ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Organization members can view invitations for their organization"
+  ON invitations FOR SELECT
+  USING (user_belongs_to_organization(auth.uid(), organization_id));
+
+CREATE POLICY "Organization admins can create invitations"
+  ON invitations FOR INSERT
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM organization_users
+      WHERE user_id = auth.uid()
+      AND organization_id = NEW.organization_id
+      AND role IN ('owner', 'admin')
+    )
+  );
+
+-- Update existing RLS policies for organizations to use the user_belongs_to_organization function
+DROP POLICY IF EXISTS "Users can view their organizations" ON organizations;
+CREATE POLICY "Users can view their organizations" 
+  ON organizations FOR SELECT 
+  USING (user_belongs_to_organization(auth.uid(), id));
+
+-- Create a secure function to handle organization signup
+CREATE OR REPLACE FUNCTION register_organization(
+  p_user_id UUID,
+  p_org_name TEXT,
+  p_contact_email TEXT,
+  p_full_name TEXT
+)
+RETURNS UUID AS $$
+DECLARE
+  v_org_id UUID;
+BEGIN
+  -- Create the organization
+  INSERT INTO organizations (name, contact_email)
+  VALUES (p_org_name, p_contact_email)
+  RETURNING id INTO v_org_id;
+  
+  -- Update user profile
+  INSERT INTO user_profiles (id, full_name, last_active_organization)
+  VALUES (p_user_id, p_full_name, v_org_id)
+  ON CONFLICT (id) DO UPDATE
+  SET 
+    full_name = p_full_name,
+    last_active_organization = v_org_id,
+    updated_at = NOW();
+  
+  -- Link user to organization as owner
+  INSERT INTO organization_users (user_id, organization_id, role)
+  VALUES (p_user_id, v_org_id, 'owner');
+  
+  RETURN v_org_id;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Function to accept an invitation
+CREATE OR REPLACE FUNCTION accept_invitation(p_token TEXT)
+RETURNS TABLE(organization_id UUID, role TEXT) AS $$
+DECLARE
+  v_invitation RECORD;
+BEGIN
+  -- Find and validate the invitation
+  SELECT * INTO v_invitation
+  FROM invitations
+  WHERE token = p_token
+  AND accepted_at IS NULL
+  AND expires_at > NOW();
+  
+  IF v_invitation IS NULL THEN
+    RAISE EXCEPTION 'Invalid or expired invitation token';
+  END IF;
+  
+  -- Mark the invitation as accepted
+  UPDATE invitations
+  SET accepted_at = NOW()
+  WHERE id = v_invitation.id;
+  
+  -- Return the organization ID and role
+  RETURN QUERY SELECT v_invitation.organization_id, v_invitation.role;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;

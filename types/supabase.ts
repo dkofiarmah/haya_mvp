@@ -8,6 +8,18 @@ export type Json =
 
 export type Database = {
   public: {
+    Functions: {
+      service_update_organization: {
+        Args: {
+          org_id: string
+          org_name: string
+          org_description: string
+          org_website: string
+          org_settings: Json
+        }
+        Returns: boolean
+      }
+    }
     Tables: {
       accommodations: {
         Row: {
@@ -1803,6 +1815,16 @@ export type Database = {
       uid: {
         Args: Record<PropertyKey, never>
         Returns: string
+      }
+      service_update_organization: {
+        Args: {
+          org_id: string
+          org_name: string
+          org_description: string
+          org_website: string
+          org_settings: Json
+        }
+        Returns: boolean
       }
     }
     Enums: {

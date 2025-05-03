@@ -13,17 +13,20 @@ export async function createServerClient() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name) {
-          // Get the cookie value directly from the cookies() function
-          return cookies().get(name)?.value
+        async get(name) {
+          // Get the cookie value using the async cookies() function
+          const cookieStore = await cookies()
+          return cookieStore.get(name)?.value
         },
-        set(name, value, options) {
-          // Set the cookie using the cookies() function
-          cookies().set({ name, value, ...options })
+        async set(name, value, options) {
+          // Set the cookie using the async cookies() function
+          const cookieStore = await cookies()
+          cookieStore.set({ name, value, ...options })
         },
-        remove(name, options) {
-          // Delete the cookie using the cookies() function
-          cookies().delete({ name, ...options })
+        async remove(name, options) {
+          // Delete the cookie using the async cookies() function
+          const cookieStore = await cookies()
+          cookieStore.delete({ name, ...options })
         }
       }
     }

@@ -40,7 +40,7 @@ const FloatingCTABanner = ({
           </div>
           <div className="shrink-0">
             <a 
-              href="/register" 
+              href="/auth/register" 
               className="inline-block px-6 py-2 bg-white text-primary rounded-full font-medium text-sm hover:bg-white/90 transition-colors shadow-sm"
             >
               Claim Your Discount →

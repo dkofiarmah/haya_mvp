@@ -12,7 +12,7 @@ interface AuthContextType {
   isLoading: boolean
   signOut: () => Promise<void>
   signInWithEmail: (email: string, password: string) => Promise<void>
-  signUpWithEmail: (email: string, password: string, orgName: string) => Promise<void>
+  signUpWithEmail: (email: string, password: string, fullName: string) => Promise<{userId: string, organizationId: string | null}>
   requestPasswordReset: (email: string) => Promise<void>
   confirmPasswordReset: (token: string, newPassword: string) => Promise<void>
   confirmEmailVerification: (token: string) => Promise<void>
@@ -62,6 +62,7 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
       if (error) throw error
     },
     signUpWithEmail: async (email: string, password: string, fullName: string) => {
+      // Step 1: Sign up user with Supabase Auth
       const { data: authData, error: signUpError } = await supabaseClient.auth.signUp({
         email,
         password,
@@ -69,62 +70,50 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
           data: {
             full_name: fullName,
           },
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=/auth/verification-pending`,
         },
       })
       if (signUpError) throw signUpError
+      if (!authData.user) throw new Error("Failed to create user account")
 
-      if (authData.user) {
-        // Create a default organization name from the user's first name
-        const firstName = fullName.split(' ')[0]
-        const defaultOrgName = `${firstName}'s Company`
-
-        try {
-          // Create the organization
-          const { data: org, error: orgError } = await supabaseClient
-            .from('organizations')
-            .insert([
-              { 
-                name: defaultOrgName,
-                contact_email: email,
-                subscription_status: 'trial',
-                subscription_tier: 'starter',
-                slug: defaultOrgName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-                metadata: {
-                  created_at: new Date().toISOString(),
-                  created_by: authData.user.id,
-                  allow_name_edit: true // Flag to indicate org name can be edited in onboarding
-                }
-              }
-            ])
-            .select()
-            .single()
-          
-          if (orgError) throw orgError
-
-          // Link user to organization
-          const { error: linkError } = await supabaseClient
-            .from('organization_users')
-            .insert([
-              { 
-                user_id: authData.user.id, 
-                organization_id: org.id,
-                role: 'owner'
-              }
-            ])
-          
-          if (linkError) throw linkError
-
-          // Save org info to localStorage for onboarding
-          localStorage.setItem('newOrgInfo', JSON.stringify({
-            id: org.id,
-            name: defaultOrgName,
-            created_at: new Date().toISOString()
-          }))
-        } catch (error: any) {
-          // Clean up if organization creation fails
-          await supabaseClient.auth.signOut()
-          throw new Error("Failed to set up your workspace. Please try again.")
+      const userId = authData.user.id
+      
+      try {
+        // Step 2: Create user profile using the admin API (bypasses RLS)
+        const response = await fetch('/api/auth/create-user-profile', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: userId,
+            fullName: fullName,
+            email: email
+          }),
+        });
+        
+        const result = await response.json();
+        
+        if (!response.ok || !result.success) {
+          throw new Error(result.error || 'Failed to create user profile')
         }
+
+        // Step 3: Save info to localStorage for onboarding
+        localStorage.setItem('newUserInfo', JSON.stringify({
+          fullName: fullName,
+          email: email,
+          registeredAt: new Date().toISOString()
+        }))
+
+        return {
+          userId: userId,
+          organizationId: null as string | null // No organization created yet
+        }
+      } catch (error: any) {
+        // Clean up if organization creation fails
+        console.error("Registration error:", error)
+        await supabaseClient.auth.signOut()
+        throw new Error(error.message || "Failed to set up your account. Please try again.")
       }
     },
     requestPasswordReset: async (email: string) => {

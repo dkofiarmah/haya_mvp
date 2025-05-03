@@ -85,7 +85,7 @@ export function EnhancedOnboardingBanner() {
               <div>
                 <h3 className="text-lg font-semibold text-primary mb-1">Complete your setup</h3>
                 <p className="text-sm text-muted-foreground">
-                  Finish configuring your account to unlock all features and customize your Haya experience.
+                  Finish configuring your account to unlock all features and customize your HAYA experience.
                 </p>
               </div>
               

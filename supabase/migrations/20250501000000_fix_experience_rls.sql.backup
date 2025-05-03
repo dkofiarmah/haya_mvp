@@ -1,0 +1,54 @@
+-- This migration adds proper RLS policies for the experiences tables
+-- Created: May 1st, 2025
+
+-- Experiences policies
+DROP POLICY IF EXISTS "Organizations can manage their experiences" ON experiences;
+CREATE POLICY "Organizations can manage their experiences" 
+  ON experiences
+  USING (org_id IN (
+    SELECT organization_id FROM organization_users 
+    WHERE user_id = auth.uid()
+  ));
+
+CREATE POLICY "Anyone can view active, non-archived experiences"
+  ON experiences FOR SELECT
+  USING (is_active = true AND is_archived = false);
+
+-- Booking policies
+DROP POLICY IF EXISTS "Organizations can view their bookings" ON experience_bookings;
+CREATE POLICY "Organizations can view their bookings" 
+  ON experience_bookings FOR SELECT
+  USING (organization_id IN (
+    SELECT organization_id FROM organization_users 
+    WHERE user_id = auth.uid()
+  ));
+
+CREATE POLICY "Public users can create bookings"
+  ON experience_bookings FOR INSERT
+  WITH CHECK (true);
+
+-- Audit log policies
+DROP POLICY IF EXISTS "Organizations can view audit logs for their experiences" ON experience_audit_log;
+CREATE POLICY "Organizations can view audit logs for their experiences"
+  ON experience_audit_log FOR SELECT
+  USING (experience_id IN (
+    SELECT id FROM experiences 
+    WHERE org_id IN (
+      SELECT organization_id FROM organization_users 
+      WHERE user_id = auth.uid()
+    )
+  ));
+
+-- Review policies
+DROP POLICY IF EXISTS "Anyone can view published reviews" ON experience_reviews;
+-- First add the is_published column if it doesn't exist
+ALTER TABLE experience_reviews ADD COLUMN IF NOT EXISTS is_published BOOLEAN DEFAULT TRUE;
+
+CREATE POLICY "Anyone can view published reviews"
+  ON experience_reviews FOR SELECT
+  USING (is_published = true);
+
+DROP POLICY IF EXISTS "Public users can create reviews" ON experience_reviews;
+CREATE POLICY "Public users can create reviews"
+  ON experience_reviews FOR INSERT
+  WITH CHECK (true);

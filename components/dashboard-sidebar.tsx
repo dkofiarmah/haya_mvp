@@ -120,11 +120,11 @@ export function DashboardSidebar({ pathname, closeSidebar }: DashboardSidebarPro
       <div className="p-6">
         <Link href="/dashboard" className="flex items-center gap-2">
           <img 
-            src="/logo.svg" 
-            alt="Haya" 
+            src="/haya-logo.svg" 
+            alt="HAYA" 
             className="h-8 w-8" 
           />
-          <h1 className="text-xl font-bold">Haya</h1>
+          <h1 className="text-xl font-bold">HAYA</h1>
         </Link>
       </div>
       <div className="flex-1 overflow-auto py-2">

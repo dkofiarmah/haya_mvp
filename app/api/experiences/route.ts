@@ -12,7 +12,7 @@ import type { Database } from '@/types/supabase'
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
-    const supabase = createRouteHandler()
+    const supabase = await createRouteHandler()
     
     // Extract query parameters
     const category = searchParams.get('category')
@@ -86,7 +86,7 @@ export async function POST(request: Request) {
     const body = await request.json()
     
     // Create Supabase client
-    const supabase = createRouteHandler()
+    const supabase = await createRouteHandler()
     
     // Check authentication
     const { data: { user }, error: authError } = await supabase.auth.getUser()

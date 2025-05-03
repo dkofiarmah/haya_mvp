@@ -32,16 +32,19 @@ export async function getExperiences({
   try {
     const supabase = await createServerClient()
     
-    // Get user's auth info
-    const { data: { session } } = await supabase.auth.getSession()
+    // Get user's auth info using getUser() which is more secure than getSession()
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    if (userError) {
+      console.error('Error fetching authenticated user:', userError)
+    }
     
     // If no specific org is provided and user is authenticated, get their orgs
     let userOrgIds: string[] = []
-    if (!orgId && session?.user) {
+    if (!orgId && user) {
       const { data: userOrgs } = await supabase
         .from('organization_users')
         .select('organization_id')
-        .eq('user_id', session.user.id)
+        .eq('user_id', user.id)
       
       userOrgIds = userOrgs?.map(org => org.organization_id) || []
     }
@@ -49,7 +52,7 @@ export async function getExperiences({
     // Start building the query
     let query = supabase
       .from('experiences')
-      .select('*, organizations(name)')
+      .select('*, organization:org_id(name)')
     
     // Filter by organization
     if (orgId) {
@@ -149,7 +152,7 @@ export async function getExperienceById(identifier: string, isPublic: boolean = 
       // For authenticated access, do standard lookup with org data
       const { data, error } = await supabase
         .from('experiences')
-        .select('*, organizations(name)')
+        .select('*, organization:org_id(name)')
         .eq('id', identifier)
         .single()
       
@@ -157,7 +160,7 @@ export async function getExperienceById(identifier: string, isPublic: boolean = 
         // If not found by ID, try slug
         const { data: dataBySlug, error: slugError } = await supabase
           .from('experiences')
-          .select('*, organizations(name)')
+          .select('*, organization:org_id(name)')
           .eq('slug', identifier)
           .single()
         
@@ -182,9 +185,9 @@ export async function createExperience(formData: FormData) {
   try {
     const supabase = await createServerClient()
     
-    // Get current authenticated user
-    const { data: { session } } = await supabase.auth.getSession()
-    if (!session?.user) {
+    // Get current authenticated user using getUser() which is more secure
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    if (!user || userError) {
       throw new Error('Authentication required')
     }
     
@@ -196,7 +199,7 @@ export async function createExperience(formData: FormData) {
       const { data: userOrgs } = await supabase
         .from('organization_users')
         .select('organization_id')
-        .eq('user_id', session.user.id)
+        .eq('user_id', user.id)
         .limit(1)
       
       if (userOrgs && userOrgs.length > 0) {
@@ -314,8 +317,8 @@ export async function createExperience(formData: FormData) {
         booking_notice_hours,
         available_dates,
         shareable_token,
-        created_by: session.user.id,
-        updated_by: session.user.id
+        created_by: user.id,
+        updated_by: user.id
       })
     
     if (insertError) {

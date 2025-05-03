@@ -22,10 +22,10 @@ export function AuthNav() {
     return (
       <div className="flex items-center gap-4">
         <Button variant="ghost" asChild>
-          <Link href="/login">Login</Link>
+          <Link href="/auth/login">Login</Link>
         </Button>
         <Button asChild>
-          <Link href="/register">Register</Link>
+          <Link href="/auth/register">Register</Link>
         </Button>
       </div>
     )

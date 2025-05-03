@@ -11,8 +11,8 @@ import { NavigationProgress } from "@/components/navigation-progress"
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
 export const metadata: Metadata = {
-  title: "Haya | AI-Powered Tour Operator Platform", // Improved SEO Title
-  description: "Haya: The intelligent platform for modern tour operators. Automate tasks, enhance client communication, and grow your business with our Digital Assistant.", // Improved SEO Description
+  title: "HAYA | AI-Powered Tour Operator Platform", // Improved SEO Title
+  description: "HAYA: The intelligent platform for modern tour operators. Automate tasks, enhance client communication, and grow your business with our Digital Assistant.", // Improved SEO Description
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

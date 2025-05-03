@@ -40,10 +40,10 @@ export function TopNavigation() {
           
           {/* Logo - centered on mobile, hidden on desktop */}
           <div className="absolute left-1/2 transform -translate-x-1/2 md:hidden">
-            <Link href="/dashboard" className="flex items-center" aria-label="Haya">
+            <Link href="/dashboard" className="flex items-center" aria-label="HAYA">
               <img 
-                src="/logo.svg" 
-                alt="Haya" 
+                src="/haya-logo.svg" 
+                alt="HAYA" 
                 className="h-9 w-9" 
               />
             </Link>

@@ -104,7 +104,7 @@ export function OnboardingBanner() {
           </div>
           
           <p className="text-sm text-slate-700">
-            You're just a few steps away from unlocking the full potential of Haya for your tour business. 
+            You're just a few steps away from unlocking the full potential of HAYA for your tour business. 
             {completionPercentage > 0 && ` You've completed ${completionPercentage}% so far.`}
           </p>
           

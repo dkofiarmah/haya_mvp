@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organization Retrieval Test</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #333;
+    }
+    pre {
+      background: #f5f5f5;
+      padding: 15px;
+      border-radius: 5px;
+      overflow: auto;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    .success {
+      background: #e6ffe6;
+      border: 1px solid #99cc99;
+    }
+    .error {
+      background: #ffe6e6;
+      border: 1px solid #cc9999;
+    }
+    button {
+      background: #0070f3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #0051a8;
+    }
+  </style>
+</head>
+<body>
+  <h1>Organization Retrieval Logic Test</h1>
+  <p>This page tests the organization retrieval logic to ensure it correctly prioritizes and retrieves organization IDs from different localStorage formats.</p>
+  
+  <button onclick="runTest()">Run Test</button>
+  
+  <div id="output" class="result">
+    <p>Click "Run Test" to start the test.</p>
+  </div>
+  
+  <h2>Expected Results</h2>
+  <p>The test should:</p>
+  <ol>
+    <li>Find the organization ID from <code>newUserInfo</code> first</li>
+    <li>Fall back to <code>newOrgInfo</code> if <code>newUserInfo</code> is not available</li>
+    <li>Indicate success if the correct ID was retrieved</li>
+  </ol>
+  
+  <script src="/tests/test-organization-retrieval.js"></script>
+  <script>
+    function runTest() {
+      // Capture console output
+      const output = document.getElementById('output');
+      output.innerHTML = '<pre id="log"></pre>';
+      const log = document.getElementById('log');
+      
+      const originalConsoleLog = console.log;
+      const originalConsoleWarn = console.warn;
+      const originalConsoleError = console.error;
+      
+      console.log = function() {
+        const args = Array.from(arguments);
+        log.innerHTML += args.join(' ') + '\n';
+        originalConsoleLog.apply(console, args);
+      };
+      
+      console.warn = function() {
+        const args = Array.from(arguments);
+        log.innerHTML += '⚠️ ' + args.join(' ') + '\n';
+        originalConsoleWarn.apply(console, args);
+      };
+      
+      console.error = function() {
+        const args = Array.from(arguments);
+        log.innerHTML += '❌ ' + args.join(' ') + '\n';
+        originalConsoleError.apply(console, args);
+      };
+      
+      // Run the test
+      try {
+        testOrganizationRetrieval()
+          .then(() => {
+            output.classList.add('success');
+          })
+          .catch(err => {
+            console.error('Test failed:', err);
+            output.classList.add('error');
+          })
+          .finally(() => {
+            // Restore original console methods
+            console.log = originalConsoleLog;
+            console.warn = originalConsoleWarn;
+            console.error = originalConsoleError;
+          });
+      } catch (err) {
+        console.error('Test failed:', err);
+        output.classList.add('error');
+        
+        // Restore original console methods
+        console.log = originalConsoleLog;
+        console.warn = originalConsoleWarn;
+        console.error = originalConsoleError;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -53,13 +53,42 @@ export function CompanySettings() {
                 <SelectTrigger id="country">
                   <SelectValue placeholder="Select country" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="max-h-[300px]">
+                  {/* North America */}
                   <SelectItem value="us">United States</SelectItem>
                   <SelectItem value="ca">Canada</SelectItem>
+                  {/* Europe */}
                   <SelectItem value="uk">United Kingdom</SelectItem>
-                  <SelectItem value="au">Australia</SelectItem>
                   <SelectItem value="fr">France</SelectItem>
                   <SelectItem value="de">Germany</SelectItem>
+                  <SelectItem value="it">Italy</SelectItem>
+                  <SelectItem value="es">Spain</SelectItem>
+                  <SelectItem value="nl">Netherlands</SelectItem>
+                  <SelectItem value="ch">Switzerland</SelectItem>
+                  {/* Africa */}
+                  <SelectItem value="za">South Africa</SelectItem>
+                  <SelectItem value="eg">Egypt</SelectItem>
+                  <SelectItem value="ke">Kenya</SelectItem>
+                  <SelectItem value="tz">Tanzania</SelectItem>
+                  <SelectItem value="ma">Morocco</SelectItem>
+                  <SelectItem value="ng">Nigeria</SelectItem>
+                  <SelectItem value="gh">Ghana</SelectItem>
+                  <SelectItem value="et">Ethiopia</SelectItem>
+                  <SelectItem value="rw">Rwanda</SelectItem>
+                  <SelectItem value="ug">Uganda</SelectItem>
+                  {/* Middle East */}
+                  <SelectItem value="ae">UAE</SelectItem>
+                  <SelectItem value="sa">Saudi Arabia</SelectItem>
+                  <SelectItem value="qa">Qatar</SelectItem>
+                  <SelectItem value="il">Israel</SelectItem>
+                  <SelectItem value="jo">Jordan</SelectItem>
+                  <SelectItem value="om">Oman</SelectItem>
+                  <SelectItem value="lb">Lebanon</SelectItem>
+                  <SelectItem value="bh">Bahrain</SelectItem>
+                  <SelectItem value="kw">Kuwait</SelectItem>
+                  {/* Other */}
+                  <SelectItem value="au">Australia</SelectItem>
+                  <SelectItem value="custom">Other (Custom)</SelectItem>
                 </SelectContent>
               </Select>
             </div>

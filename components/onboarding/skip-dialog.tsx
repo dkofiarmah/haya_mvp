@@ -1,61 +1,68 @@
 "use client"
 
-import * as React from "react"
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogHeader, 
-  DialogTitle, 
-  DialogDescription,
-  DialogFooter
-} from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { AlertTriangle } from "lucide-react"
 
 interface SkipOnboardingDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   onConfirm: () => void
-  isSkipping: boolean
+  isLoading: boolean
 }
 
 export function SkipOnboardingDialog({
   open,
   onOpenChange,
   onConfirm,
-  isSkipping
+  isLoading
 }: SkipOnboardingDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5 text-amber-500" />
-            Skip Setup?
+          <DialogTitle className="flex items-center">
+            <AlertTriangle className="h-5 w-5 text-amber-500 mr-2" />
+            Skip onboarding setup?
           </DialogTitle>
-          <DialogDescription className="pt-2">
-            You can complete the setup later, but you'll have limited functionality until then. We recommend taking a few minutes to complete it now.
+          <DialogDescription>
+            You can always complete your setup later from your dashboard.
           </DialogDescription>
         </DialogHeader>
-        
-        <div className="py-2">
-          <p className="text-sm">If you skip now, you can access setup anytime from your dashboard.</p>
+        <div className="space-y-4">
+          <div className="text-sm space-y-2">
+            <p>
+              Your progress will be saved, but skipping setup means:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Some features may be limited until you complete the setup</li>
+              <li>AI assistants will use default settings instead of customized ones</li>
+              <li>You'll miss out on personalized recommendations</li>
+            </ul>
+          </div>
         </div>
-        
-        <DialogFooter className="gap-2 sm:gap-0">
+        <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-between sm:space-x-2">
           <Button
+            type="button"
             variant="outline"
             onClick={() => onOpenChange(false)}
-            disabled={isSkipping}
           >
             Continue Setup
           </Button>
           <Button 
-            variant="default"
+            type="button" 
             onClick={onConfirm}
-            disabled={isSkipping}
+            disabled={isLoading}
+            variant="default"
           >
-            {isSkipping ? "Saving..." : "Skip for Now"}
+            {isLoading ? "Processing..." : "Skip for Now"}
           </Button>
         </DialogFooter>
       </DialogContent>

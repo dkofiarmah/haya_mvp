@@ -18,6 +18,29 @@ export async function createExperience(formData: FormData) {
       throw new Error('Authentication required')
     }
     
+    // Check if experience_audit_log table exists and has the required organization_id constraint
+    // This will help us diagnose the issue
+    try {
+      const { data: tableInfo, error: tableError } = await (supabase as any).rpc('exec_sql', {
+        sql: `SELECT EXISTS (
+          SELECT 1 FROM information_schema.columns 
+          WHERE table_name = 'experience_audit_log' 
+          AND column_name = 'organization_id' 
+          AND is_nullable = 'NO'
+        )`
+      });
+      
+      if (tableInfo && tableInfo.length > 0) {
+        console.log('DEBUG: experience_audit_log has organization_id NOT NULL constraint:', tableInfo[0].exists);
+      }
+      
+      if (tableError) {
+        console.error('DEBUG: Error checking table structure:', tableError);
+      }
+    } catch (e) {
+      console.error('DEBUG: Could not verify table structure:', e);
+    }
+    
     // Get organization ID from form data or user's primary organization
     let orgId = formData.get('org_id') as string
     
@@ -45,6 +68,8 @@ export async function createExperience(formData: FormData) {
         orgId = orgs[0].id
       }
     }
+    
+    console.log('DEBUG: Using organization ID:', orgId);
     
     // Get the basic fields
     const name = formData.get('name') as string
@@ -124,6 +149,8 @@ export async function createExperience(formData: FormData) {
     
     // Create the experience
     const experienceId = uuidv4()
+    
+    // Insert the experience with metadata to indicate we'll handle the audit log
     const { error: insertError } = await supabase
       .from('experiences')
       .insert({
@@ -132,7 +159,7 @@ export async function createExperience(formData: FormData) {
         name,
         description,
         category,
-        categories,
+        categories: categories || [],
         duration_minutes,
         max_group_size,
         min_group_size,
@@ -140,12 +167,12 @@ export async function createExperience(formData: FormData) {
         currency,
         location,
         meeting_point,
-        included,
-        not_included,
-        requirements,
-        highlights,
+        included: included.map(item => item.toString()),
+        not_included: not_included.map(item => item.toString()),
+        requirements: requirements.map(item => item.toString()),
+        highlights: highlights.map(item => item.toString()),
         cancellation_policy,
-        languages,
+        languages: languages.map(item => item.toString()),
         tags,
         is_active,
         is_archived: false,
@@ -155,8 +182,10 @@ export async function createExperience(formData: FormData) {
         available_dates,
         shareable_token,
         created_by: session.user.id,
-        updated_by: session.user.id
-      })
+        updated_by: session.user.id,
+        // Add metadata to signal that we'll handle the audit log manually
+        meta_data: { skip_audit_trigger: true }
+      });
     
     if (insertError) {
       throw new Error(`Failed to create experience: ${insertError.message}`)
@@ -206,20 +235,52 @@ export async function createExperience(formData: FormData) {
         .eq('id', experienceId)
     }
     
-    // Log the creation in audit trail
-    await logExperienceAction(experienceId, 'created')
+    try {
+      // Log the creation in audit trail using the fixed function that auto-fetches org_id
+      await supabase.rpc('insert_experience_audit_log_fixed', {
+        p_experience_id: experienceId,
+        p_user_id: session.user.id,
+        p_action_type: 'created',
+        p_changes: {
+          name,
+          category,
+          org_id: orgId,
+          created_by: session.user.id
+        }
+      });
+    } catch (auditError) {
+      console.error('Error creating audit log:', auditError);
+      
+      // Fallback - try direct insertion with explicit org_id
+      try {
+        await supabase.from('experience_audit_log').insert({
+          experience_id: experienceId,
+          organization_id: orgId, // Explicitly set the organization_id
+          user_id: session.user.id,
+          action_type: 'created',
+          changes: {
+            name,
+            category,
+            org_id: orgId,
+            created_by: session.user.id
+          }
+        });
+      } catch (directInsertError) {
+        console.error('Fallback direct insertion also failed:', directInsertError);
+        // Continue with the function even if audit log fails
+      }
+    }
     
-    // Get the slug and shareable link for the response
+    // Get the shareable token link for the response
     const { data: experience } = await supabase
       .from('experiences')
-      .select('slug, shareable_token')
+      .select('shareable_token')
       .eq('id', experienceId)
       .single()
     
     const result = {
       success: true,
       id: experienceId,
-      slug: experience?.slug,
       shareable_token: experience?.shareable_token,
       shareable_url: experience ? `/experiences/public/${experience.shareable_token}` : null
     }

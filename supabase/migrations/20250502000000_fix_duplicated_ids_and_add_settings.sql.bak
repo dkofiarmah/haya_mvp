@@ -1,0 +1,99 @@
+-- filepath: /Users/danny_1/_PROJECTS_/haya/haya_mvp/supabase/migrations/20250502000000_fix_duplicated_ids_and_add_settings.sql
+-- Updating schema to fix duplication in experiences table and add organization settings fields
+-- Created on: May 2, 2025
+
+-- First, ensure all experiences have organization_id set correctly
+UPDATE experiences
+SET organization_id = org_id 
+WHERE organization_id IS NULL AND org_id IS NOT NULL;
+
+-- For consistency, add a comment to the organization_id field to mark it as preferred
+COMMENT ON COLUMN experiences.organization_id IS 'Primary organization identifier - prefer using this over org_id';
+
+-- Add a comment to the org_id field to mark it as deprecated
+COMMENT ON COLUMN experiences.org_id IS 'DEPRECATED: Use organization_id instead';
+
+-- Create a trigger to automatically sync organization_id and org_id
+CREATE OR REPLACE FUNCTION sync_org_ids()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- For inserts, set org_id if only organization_id is provided
+    IF TG_OP = 'INSERT' THEN
+        IF NEW.organization_id IS NOT NULL AND NEW.org_id IS NULL THEN
+            NEW.org_id := NEW.organization_id;
+        ELSIF NEW.org_id IS NOT NULL AND NEW.organization_id IS NULL THEN
+            NEW.organization_id := NEW.org_id;
+        END IF;
+    -- For updates, keep both fields in sync
+    ELSIF TG_OP = 'UPDATE' THEN
+        IF NEW.organization_id IS DISTINCT FROM OLD.organization_id AND NEW.organization_id IS NOT NULL THEN
+            NEW.org_id := NEW.organization_id;
+        ELSIF NEW.org_id IS DISTINCT FROM OLD.org_id AND NEW.org_id IS NOT NULL THEN
+            NEW.organization_id := NEW.org_id;
+        END IF;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER sync_experience_org_ids
+BEFORE INSERT OR UPDATE ON experiences
+FOR EACH ROW EXECUTE FUNCTION sync_org_ids();
+
+-- Add default structure for organization settings to ensure consistency with onboarding
+ALTER TABLE organizations 
+ALTER COLUMN settings SET DEFAULT '{
+    "companyDetails": {
+        "yearEstablished": null,
+        "employeeCount": null, 
+        "specialties": [],
+        "locations": {
+            "headquarters": null,
+            "operatingRegions": []
+        },
+        "businessModel": {
+            "type": "b2c",
+            "averageBookingValue": null,
+            "annualBookings": null
+        },
+        "targetMarket": null
+    },
+    "serviceOfferings": {
+        "tourTypes": [],
+        "customPackages": true,
+        "groupSize": {
+            "min": 1,
+            "max": 20
+        },
+        "destinationsServed": [],
+        "languages": ["English"],
+        "specialServices": []
+    },
+    "clientExperience": {
+        "bookingChannels": [],
+        "communicationPreferences": [],
+        "paymentMethods": [],
+        "cancellationPolicy": null,
+        "customerSupport": {
+            "channels": [],
+            "availability": "24/7"
+        }
+    },
+    "aiPreferences": {
+        "communicationStyle": "professional",
+        "responseLength": "balanced",
+        "languagePreference": "en",
+        "automationLevel": "balanced",
+        "customizationLevel": "moderate",
+        "proactiveEngagement": true
+    },
+    "enabledAssistants": ["discovery", "itinerary", "concierge", "notifications"]
+}'::jsonb;
+
+-- Add indexes to improve query performance on commonly filtered fields
+CREATE INDEX IF NOT EXISTS idx_experiences_is_active ON experiences(is_active);
+CREATE INDEX IF NOT EXISTS idx_experiences_is_archived ON experiences(is_archived);
+CREATE INDEX IF NOT EXISTS idx_experiences_organization_id ON experiences(organization_id);
+
+-- Just set the default for organization settings
+-- Skip the policy updates as they will be handled by the standardize_organization_columns migration

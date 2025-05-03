@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { createExperience } from '@/app/actions/create-experience'
+import { createExperience } from '@/app/actions/create-experience-fixed'
 import { updateExperience } from '@/app/actions/experiences'
 import { useRouter } from 'next/navigation'
 import { Tab } from '@headlessui/react'

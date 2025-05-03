@@ -38,9 +38,7 @@ export default function HomePage() {
 
   useEffect(() => {
     setMounted(true)
-    // Preload logo
-    const img = new global.Image();
-    img.src = '/logo.svg';
+    // We don't need to manually preload the logo as we'll use Next.js Image with priority
   }, [])
 
   return (
@@ -53,16 +51,16 @@ export default function HomePage() {
         <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2 group" aria-label="Haya Home">
+            <Link href="/" className="flex items-center space-x-2 group" aria-label="HAYA Home">
               <Image 
-                src="/logo.svg" 
-                alt="Haya Logo" 
+                src="/haya-logo.svg" 
+                alt="HAYA Logo" 
                 width={36} 
                 height={36} 
                 className="text-primary group-hover:opacity-80 transition-opacity"
                 priority // Prioritize logo loading
               />
-              <span className="text-xl font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors font-display">haya</span>
+              <span className="text-xl font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors font-display">HAYA</span>
             </Link>
             
             {/* Main Navigation - Desktop */}
@@ -95,10 +93,10 @@ export default function HomePage() {
                 </Button>
               ) : (
                 <>
-                  <Link href="/login" aria-label="Login to your account">
+                  <Link href="/auth/login" aria-label="Login to your account">
                     <Button variant="ghost" className="rounded-full px-4 py-2 hover:bg-accent transition-colors">Login</Button>
                   </Link>
-                  <Link href="/register" aria-label="Sign up for a free account">
+                  <Link href="/auth/register" aria-label="Sign up for a free account">
                     <Button className="rounded-full px-4 py-2 transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105 bg-primary text-primary-foreground hover:bg-primary/90">
                       Start Free
                       <span className="ml-1 text-xs bg-white/20 px-1.5 py-0.5 rounded-full">14d</span>
@@ -145,10 +143,10 @@ export default function HomePage() {
                   </Link>
                 ))}
                 <div className="pt-2 border-t border-border/20 mt-2 space-y-3">
-                  <Link href="/login" aria-label="Login to your account" onClick={() => setMobileMenuOpen(false)}>
+                  <Link href="/auth/login" aria-label="Login to your account" onClick={() => setMobileMenuOpen(false)}>
                     <Button variant="ghost" className="w-full justify-start rounded-md">Login</Button>
                   </Link>
-                  <Link href="/register" aria-label="Sign up for a free account" onClick={() => setMobileMenuOpen(false)}>
+                  <Link href="/auth/register" aria-label="Sign up for a free account" onClick={() => setMobileMenuOpen(false)}>
                     <Button className="w-full justify-start rounded-md bg-primary text-primary-foreground hover:bg-primary/90">
                       Start Free Trial
                     </Button>
@@ -165,7 +163,7 @@ export default function HomePage() {
         {/* Hero Section */}
         <section 
           ref={heroRef}
-          className={`relative py-12 sm:py-16 overflow-hidden transition-opacity duration-1000 ease-out ${heroVisible ? "opacity-100" : "opacity-0 translate-y-4"}`}
+          className={`relative pt-20 pb-12 sm:pt-24 sm:pb-16 overflow-hidden transition-opacity duration-1000 ease-out ${heroVisible ? "opacity-100" : "opacity-0 translate-y-4"}`}
         >
           {/* Subtle Background - Consider a very faint, large-scale abstract graphic or texture here */} 
           <div className="absolute inset-0 z-0 opacity-30">
@@ -178,9 +176,7 @@ export default function HomePage() {
           </div>
           
           <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center mb-8">
-              
-              
+            <div className="text-center mb-8">              
               <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight mb-6 text-balance leading-tight sm:leading-tight lg:leading-tight font-display">
                 <div className="typewriter-container">
                   <div className="typewriter-text">
@@ -193,12 +189,12 @@ export default function HomePage() {
             </div>
             
             <p className="text-lg sm:text-xl text-muted-foreground/90 mb-16 max-w-[58rem] mx-auto text-balance leading-relaxed text-center">
-              Haya combines AI intelligence with powerful automation to eliminate administrative overload. 
+              HAYA combines AI intelligence with powerful automation to eliminate administrative overload. 
               Manage bookings, generate itineraries, and respond to clients — all from one intelligent platform.
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link href="/register" aria-label="Get started with a free account">
+              <Link href="/auth/register" aria-label="Get started with a free account">
                 <Button size="lg" className="rounded-full px-6 py-2.5 shadow-md hover:shadow-primary/20 hover:scale-105 transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 font-medium">
                   Start Your Free Trial
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -314,7 +310,7 @@ export default function HomePage() {
                 <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>Why Choose Haya</span>
+                <span>Why Choose HAYA</span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-5 text-balance font-display">Elevate Your Operations</h2>
               <p className="text-lg text-muted-foreground/90 text-balance max-w-2xl mx-auto">The modern approach to tour management</p>
@@ -328,7 +324,7 @@ export default function HomePage() {
                   <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  Haya
+                  HAYA
                 </div>
               </div>
               <div className="text-center">
@@ -391,7 +387,7 @@ export default function HomePage() {
                     <h3 className="font-medium text-lg">{row.feature}</h3>
                   </div>
                   
-                  {/* Haya column */}
+                  {/* HAYA column */}
                   <div className="p-5 bg-primary/5 flex items-center">
                     <div className="flex items-start">
                       <div className="h-6 w-6 rounded-full bg-primary/10 text-primary mr-3 flex-shrink-0 flex items-center justify-center">
@@ -474,13 +470,13 @@ export default function HomePage() {
                 <span>Success Stories</span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4 text-balance font-display">From Overwhelmed to Thriving</h2>
-              <p className="text-lg text-muted-foreground/90 text-balance">Hear from tour operators who transformed their businesses with Haya</p>
+              <p className="text-lg text-muted-foreground/90 text-balance">Hear from tour operators who transformed their businesses with HAYA</p>
             </div>
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {[
                 {
-                  quote: "Before Haya, I was spending 70% of my time on admin. Now it's down to 20%, and our bookings have increased by 40% because I can focus on creating amazing experiences.",
+                  quote: "Before HAYA, I was spending 70% of my time on admin. Now it's down to 20%, and our bookings have increased by 40% because I can focus on creating amazing experiences.",
                   author: "Sarah Omondi",
                   role: "Founder, Kenya Safari Experiences",
                   image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80"
@@ -492,7 +488,7 @@ export default function HomePage() {
                   image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80"
                 },
                 {
-                  quote: "Our response time went from 24 hours to under 1 hour. Haya's AI handles 80% of common questions, and clients love how quickly they get answers.",
+                  quote: "Our response time went from 24 hours to under 1 hour. HAYA's AI handles 80% of common questions, and clients love how quickly they get answers.",
                   author: "Amina Hassan",
                   role: "Operations Director, Coastal Tours",
                   image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80"
@@ -538,7 +534,7 @@ export default function HomePage() {
                 <span>Common Questions</span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4 text-balance font-display">Frequently Asked Questions</h2>
-              <p className="text-lg text-muted-foreground/90 text-balance">Everything you need to know about Haya and how it can transform your tour business</p>
+              <p className="text-lg text-muted-foreground/90 text-balance">Everything you need to know about HAYA and how it can transform your tour business</p>
             </div>
             
             <div className="space-y-4">
@@ -606,15 +602,15 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center space-x-3">
               <Image 
-                src="/logo.svg" 
-                alt="Haya Logo" 
+                src="/haya-logo.svg" 
+                alt="HAYA Logo" 
                 width={28} 
                 height={28}
               />
-              <span className="text-lg font-semibold text-foreground font-display">haya</span>
+              <span className="text-lg font-semibold text-foreground font-display">HAYA</span>
             </div>
             <p className="text-sm text-muted-foreground">Revolutionizing tour management with AI-powered automation.</p>
-            <p className="text-xs text-muted-foreground">&copy; {new Date().getFullYear()} Haya. All rights reserved.</p>
+            <p className="text-xs text-muted-foreground">&copy; {new Date().getFullYear()} HAYA. All rights reserved.</p>
           </div>
         </div>
       </footer>

@@ -179,21 +179,27 @@ export function useOrganization() {
 
 export async function getUserOrganizations(userId: string): Promise<Organization[]> {
   try {
-    // First approach: Use the RPC function if available
+    // First approach: Use our custom API endpoint instead of the RPC function
     try {
-      const { data, error } = await supabaseClient
-        .rpc('get_user_organizations_safe', { user_uuid: userId })
-      
-      if (!error && data && Array.isArray(data)) {
-        // Convert the RPC result to Organization format
-        const orgs = await supabaseClient
-          .from('organizations')
-          .select('*')
-          .in('id', data.map((item: any) => item.organization_id))
-        
-        return (orgs.data || []) as Organization[]
+      // Only run this in the browser
+      if (typeof window !== 'undefined') {
+        const response = await fetch('/api/organizations/user-organizations');
+        if (response.ok) {
+          const data = await response.json();
+          if (data && Array.isArray(data)) {
+            // Convert the API result to Organization format
+            const orgs = await supabaseClient
+              .from('organizations')
+              .select('*')
+              .in('id', data.map((item: any) => item.organization_id))
+            
+            return (orgs.data || []) as Organization[]
+          }
+        }
       }
-    } catch (rpcError) {
+    } catch (apiError) {
+      console.warn('Failed to fetch organizations via API:', apiError);
+    
       console.warn('RPC function failed, falling back to direct query:', rpcError)
     }
     
